@@ -1,0 +1,4 @@
+#ifndef CNBIDRAW_WINDOW_CPP
+#define CNBIDRAW_WINDOW_CPP
+
+#endif

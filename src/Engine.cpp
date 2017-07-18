@@ -1,12 +1,12 @@
-#ifndef CNBI_MOBILE_ENGINE_CPP
-#define CNBI_MOBILE_ENGINE_CPP
+#ifndef CNBIDRAW_ENGINE_CPP
+#define CNBIDRAW_ENGINE_CPP
 
-#include "CmEngine.hpp"
+#include "Engine.hpp"
 
 namespace cnbi {
 	namespace mobile {
 
-CmEngine::CmEngine(void){
+Engine::Engine(void){
 
 	this->win_ptr_ = nullptr;
 	this->win_caption_ = "Mobile control";
@@ -19,30 +19,30 @@ CmEngine::CmEngine(void){
 	this->win_sem_.Wait();
 };
 
-CmEngine::~CmEngine(void){
+Engine::~Engine(void){
 	this->Destroy();
 	this->win_sem_.Post();
 };
 
-void CmEngine::SetCaption(const std::string caption) {
+void Engine::SetCaption(const std::string caption) {
 	this->win_caption_ = caption;
 }
 
-void CmEngine::SetSize(const unsigned int w, const unsigned int h) {
+void Engine::SetSize(const unsigned int w, const unsigned int h) {
 	this->win_w_ = w;
 	this->win_h_ = h;
 }
 
-void CmEngine::SetPosition(const unsigned int x, const unsigned int y) {
+void Engine::SetPosition(const unsigned int x, const unsigned int y) {
 	this->win_x_ = x;
 	this->win_y_ = y;
 }
 
-void CmEngine::SetBits(const unsigned int bpp) {
+void Engine::SetBits(const unsigned int bpp) {
 	this->win_bpp_ = bpp;
 }
 
-void CmEngine::AddShape(const std::string name, dtk_hshape shp, bool overwrite) {
+void Engine::AddShape(const std::string name, dtk_hshape shp, bool overwrite) {
 
 	if(this->Exists(name) && overwrite == true) {
 		this->RemoveShape(name);
@@ -54,7 +54,7 @@ void CmEngine::AddShape(const std::string name, dtk_hshape shp, bool overwrite) 
 
 }
 
-bool CmEngine::RemoveShape(const std::string name) {
+bool Engine::RemoveShape(const std::string name) {
 
 	if(this->Exists(name)) {
 		this->shp_sem_.Wait();
@@ -68,7 +68,7 @@ bool CmEngine::RemoveShape(const std::string name) {
 	}
 }
 
-bool CmEngine::Exists(const std::string name) {
+bool Engine::Exists(const std::string name) {
 	bool has;	
 
 	this->shp_sem_.Wait();
@@ -79,7 +79,7 @@ bool CmEngine::Exists(const std::string name) {
 	return has;
 }
 
-dtk_hshape CmEngine::GetShape(const std::string name) {
+dtk_hshape Engine::GetShape(const std::string name) {
 
 	if(this->Exists(name)) {
 		auto it = this->shapes_.find(name);
@@ -89,7 +89,7 @@ dtk_hshape CmEngine::GetShape(const std::string name) {
 	}
 }
 
-bool CmEngine::HideShape(const std::string name) {
+bool Engine::HideShape(const std::string name) {
 
 	bool res = false;
 	this->colormask_[0] = 0.0f;
@@ -106,7 +106,7 @@ bool CmEngine::HideShape(const std::string name) {
 	return true;
 }
 
-bool CmEngine::ShowShape(const std::string name) {
+bool Engine::ShowShape(const std::string name) {
 
 	bool res = false;
 	this->colormask_[0] = 0.0f;
@@ -123,7 +123,7 @@ bool CmEngine::ShowShape(const std::string name) {
 	return true;
 }
 
-bool CmEngine::SetColor(const std::string name, const float* color) {
+bool Engine::SetColor(const std::string name, const float* color) {
 
 	bool res = false;
 	if(this->Exists(name) == false) {
@@ -135,7 +135,7 @@ bool CmEngine::SetColor(const std::string name, const float* color) {
 	return true;
 }
 
-void CmEngine::Main(void) {
+void Engine::Main(void) {
 	if(!CcThread::IsRunning()) {
 		return;
 	}
@@ -146,7 +146,7 @@ void CmEngine::Main(void) {
 	dtk_make_current_window(this->win_ptr_);
 	this->win_sem_.Post();
 
-	CcLogConfig("Starting CmEngine");
+	CcLogConfig("Starting Engine");
 	while(CcThread::IsRunning()) {
 		this->win_sem_.Wait();
 		dtk_clear_screen(this->win_ptr_);
@@ -155,13 +155,13 @@ void CmEngine::Main(void) {
 		this->win_sem_.Post();
 	}
 	
-	CcLogConfig("Stopped CmEngine");
+	CcLogConfig("Stopped Engine");
 	this->win_sem_.Wait();
 	dtk_close(this->win_ptr_);
 	this->win_sem_.Post();
 }
 
-void CmEngine::Render(void) {
+void Engine::Render(void) {
 	this->shp_sem_.Wait();
 	for(auto it = this->shapes_.begin(); it != this->shapes_.end(); ++it) {
 		if(it->second != nullptr)
@@ -170,7 +170,7 @@ void CmEngine::Render(void) {
 	this->shp_sem_.Post();
 }
 
-void CmEngine::Destroy(void) {
+void Engine::Destroy(void) {
 
 	this->shp_sem_.Wait();
 	for(auto it = this->shapes_.begin(); it!=this->shapes_.end(); ++it) {

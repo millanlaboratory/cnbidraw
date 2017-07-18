@@ -1,0 +1,4 @@
+#ifndef CNBIDRAW_SHAPE_CPP
+#define CNBIDRAW_SHAPE_CPP
+
+#endif

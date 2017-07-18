@@ -1,0 +1,4 @@
+#ifndef CNBIDRAW_SHAPE_HPP
+#define CNBIDRAW_SHAPE_HPP
+
+#endif

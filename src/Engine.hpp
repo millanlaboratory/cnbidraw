@@ -1,18 +1,18 @@
-#ifndef CNBI_MOBILE_ENGINE_HPP
-#define CNBI_MOBILE_ENGINE_HPP
+#ifndef CNBIDRAW_ENGINE_HPP
+#define CNBIDRAW_ENGINE_HPP
 
 #include <drawtk.h>
 #include <cnbicore/CcBasic.hpp>
 #include <cnbicore/CcThread.hpp>
 
 namespace cnbi {
-	namespace mobile {
+	namespace draw {
 
-class CmEngine : public CcThread {
+class Engine : public CcThread {
 	
 	public:
-		CmEngine(void);
-		~CmEngine(void);
+		Engine(void);
+		~Engine(void);
 
 		void SetCaption(const std::string caption);
 		void SetSize(const unsigned int w, const unsigned int h);

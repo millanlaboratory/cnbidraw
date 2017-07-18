@@ -1,0 +1,4 @@
+#ifndef CNBIDRAW_WINDOW_HPP
+#define CNBIDRAW_WINDOW_HPP
+
+#endif

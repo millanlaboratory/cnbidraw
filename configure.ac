@@ -4,7 +4,7 @@ m4_define([lib_age],1)
 
 AC_INIT(cnbidraw,[lib_current.lib_revision.lib_age],
 		luca.tonin@epfl.ch)
-AC_CONFIG_SRCDIR([src/DrawEngine.hpp])
+AC_CONFIG_SRCDIR([src/Engine.hpp])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADERS([config/config.h])

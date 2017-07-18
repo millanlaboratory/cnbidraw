@@ -43,6 +43,6 @@ AC_SUBST([REVISION],[lib_revision])
 AC_SUBST([AGE],[lib_age])
 AC_SUBST(AM_LDFLAGS)
 
-AC_CONFIG_FILES([Makefile src/Makefile src/cnbimobile.pc])
+AC_CONFIG_FILES([Makefile src/Makefile src/cnbidraw.pc])
 
 AC_OUTPUT

@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libcnbimobile
+Description: CNBI Draw library
+Version: @PACKAGE_VERSION@
+Libs: -L${libdir} -lcnbidraw
+Cflags: -I${includedir}/cnbidraw

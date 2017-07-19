@@ -1,54 +1,49 @@
 #ifndef CNBIDRAW_ENGINE_HPP
 #define CNBIDRAW_ENGINE_HPP
 
+#include <memory>
+#include <unordered_map>
+
 #include <drawtk.h>
 #include <cnbicore/CcBasic.hpp>
 #include <cnbicore/CcThread.hpp>
 
+#include "Flags.hpp"
+#include "Window.hpp"
+#include "Shape.hpp"
+
 namespace cnbi {
 	namespace draw {
 
-class Engine : public CcThread {
+typedef std::unordered_map<std::string, Shape*> ShapesMap;
+typedef std::unordered_map<std::string, Shape*>::iterator ShapesMapIt;
+typedef std::unordered_map<std::string, Shape*>::const_iterator ShapesMapConstIt;
+
+class Engine : public CcThread, public Window {
 	
 	public:
 		Engine(void);
-		~Engine(void);
+		Engine(const std::string& caption, unsigned int width, unsigned int height);
+		virtual ~Engine(void);
 
-		void SetCaption(const std::string caption);
-		void SetSize(const unsigned int w, const unsigned int h);
-		void SetPosition(const unsigned int x, const unsigned int y);
-		void SetBits(const unsigned int bpp);
+		void  Open(void);
+		void  SetRefresh(float refresh);
+		float GetRefresh(void);
 
-		void AddShape(const std::string name, dtk_hshape shp, bool overwrite = true);
-		bool RemoveShape(const std::string name);
-		dtk_hshape GetShape(const std::string name);
-		bool Exists(const std::string name);
-
-		bool HideShape(const std::string name);
-		bool ShowShape(const std::string name);
-		bool SetColor(const std::string name, const float* color);
+		bool Exists(const std::string& name);
+		bool AddShape(const std::string& name, Shape* shp, bool overwrite = true);
+		bool RemoveShape(const std::string& name);
 
 	protected:
 		void Main(void);
 		void Render(void);
-		void Destroy(void);
 
 	private:
-		dtk_hwnd		win_ptr_;
-		std::string		win_caption_;
-		unsigned int 	win_w_;
-		unsigned int 	win_h_;
-		unsigned int 	win_x_;
-		unsigned int 	win_y_;
-		unsigned int 	win_bpp_;
+		CcSemaphore		shps_map_sem_;
+		CcSemaphore		eng_sem_;
 
-		CcSemaphore 	win_sem_;
-		CcSemaphore		shp_sem_;
-
-		std::map<std::string, dtk_hshape> 	shapes_;
-
-		float 			colormask_[4];
-		
+		ShapesMap 	shps_map_;
+		float 		refresh_;
 };
 
 	}

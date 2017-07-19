@@ -1,4 +1,4 @@
-m4_define([lib_current],0)
+m4_define([lib_current],1)
 m4_define([lib_revision],0)
 m4_define([lib_age],1)
 
@@ -43,6 +43,6 @@ AC_SUBST([REVISION],[lib_revision])
 AC_SUBST([AGE],[lib_age])
 AC_SUBST(AM_LDFLAGS)
 
-AC_CONFIG_FILES([Makefile src/Makefile src/cnbidraw.pc])
+AC_CONFIG_FILES([Makefile src/Makefile tests/Makefile src/cnbidraw.pc])
 
 AC_OUTPUT

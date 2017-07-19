@@ -6,4 +6,11 @@
 *.in
 *.la
 *.swp
+test-suite.log
+test_engine
+test_engine.log
+test_engine.trs
+test_shapes
+test_shapes.log
+test_shapes.trs
 Makefile

@@ -35,6 +35,8 @@ int main(int argc, char** argv) {
 	engine.AddShape("circle", &circle);
 	engine.AddShape("strip", &strip);
 
+	printf("Dumping current shapes\n");
+	engine.Dump();
 	engine.Open();
 
 	CcTimeValue tic;
@@ -56,7 +58,24 @@ int main(int argc, char** argv) {
 
 		CcTime::Sleep(100);
 	}
+	printf("Dumping current shapes\n");
+	engine.Dump();
 
+	printf("Raise rectangle:\n");
+	engine.RaiseShape("rectangle");
+	engine.Dump();
+	
+	printf("Lower strip:\n");
+	engine.LowerShape("strip");
+	engine.Dump();
+	
+	printf("Lower circle:\n");
+	engine.LowerShape("circle");
+	engine.Dump();
+	
+	printf("Removing 'circle' shape\n");
+	engine.RemoveShape("circle");
+	engine.Dump();
 
 	printf("Quit..\n");
 

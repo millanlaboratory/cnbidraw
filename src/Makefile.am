@@ -7,6 +7,7 @@ libcnbidraw_include_HEADERS = Flags.hpp \
 							  Engine.hpp \
 							  Window.hpp \
 							  Shape.hpp \
+							  ShapeMap.hpp \
 						 	  Arrow.hpp \
 						 	  Circle.hpp \
 						 	  CircleStrip.hpp \
@@ -20,6 +21,8 @@ libcnbidraw_la_SOURCES = Flags.hpp \
 						 Window.cpp \
 						 Shape.hpp \
 						 Shape.cpp \
+						 ShapeMap.hpp \
+						 ShapeMap.cpp \
 						 Arrow.hpp \
 						 Arrow.cpp \
 						 Circle.hpp \

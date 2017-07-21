@@ -9,7 +9,7 @@ namespace cnbi {
 class Circle : public Shape {
 
 	public:
-		Circle(float radius, const float* color = CNBIDRAW_SHAPE_DEFAULT_COLOR,
+		Circle(float radius, const float* color,
 			   int filled = CNBIDRAW_SHAPE_DEFAULT_FILLED,
 			   unsigned int npoints = CNBIDRAW_SHAPE_DEFAULT_NPOINTS);
 		virtual ~Circle(void);

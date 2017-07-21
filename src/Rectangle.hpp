@@ -9,8 +9,7 @@ namespace cnbi {
 class Rectangle : public Shape {
 
 	public:
-		Rectangle(float width, float height, 
-				  const float* color = CNBIDRAW_SHAPE_DEFAULT_COLOR,
+		Rectangle(float width, float height, const float* color,
 				  int filled = CNBIDRAW_SHAPE_DEFAULT_FILLED);
 		virtual ~Rectangle(void);
 

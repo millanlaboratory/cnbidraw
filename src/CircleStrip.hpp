@@ -9,8 +9,8 @@ namespace cnbi {
 class CircleStrip : public Circle {
 
 	public:
-		CircleStrip(float radius, float thick, const float* color = CNBIDRAW_SHAPE_DEFAULT_COLOR,
-			   unsigned int npoints = CNBIDRAW_SHAPE_DEFAULT_NPOINTS);
+		CircleStrip(float radius, float thick, const float* color,
+					unsigned int npoints = CNBIDRAW_SHAPE_DEFAULT_NPOINTS);
 		virtual ~CircleStrip(void);
 
 		virtual void Create(void);

@@ -6,6 +6,7 @@ libcnbidraw_includedir = $(includedir)/cnbidraw
 libcnbidraw_include_HEADERS = Flags.hpp \
 							  Engine.hpp \
 							  Window.hpp \
+							  EventsHandler.hpp \
 							  Shape.hpp \
 							  ShapeMap.hpp \
 						 	  Arrow.hpp \
@@ -21,6 +22,8 @@ libcnbidraw_la_SOURCES = Flags.hpp \
 						 Engine.cpp \
 						 Window.hpp \
 						 Window.cpp \
+						 EventsHandler.hpp \
+						 EventsHandler.cpp \
 						 Shape.hpp \
 						 Shape.cpp \
 						 ShapeMap.hpp \

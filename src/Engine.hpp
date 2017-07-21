@@ -30,7 +30,7 @@ class Engine : public CcThread, public Window {
       bool RaiseTop(const std::string& name);
       bool Lower(const std::string& name);
       bool LowerBottom(const std::string& name);
-      
+     
       void Dump(void);
 
    protected:

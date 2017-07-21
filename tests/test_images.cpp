@@ -6,10 +6,9 @@ int main(int argc, char** argv) {
 
 	float image1_width, image1_height;
 	float image2_width, image2_height;
-	//const std::string rootpath  = std::string(getenv("srcdir"));
-	const std::string filename1 = "./tests/image1.png";
-	const std::string filename2 = "./tests/image2.png";
-	const std::string filename3 = "./tests/image3.png";
+	const std::string filename1 = "./image1.png";
+	const std::string filename2 = "./image2.png";
+	const std::string filename3 = "./image3.png";
 
 	image1_width = 1.0f;
 	image1_height = 0.43f;

@@ -19,8 +19,10 @@ Image::Image(float width, float height, const float* color) {
 }
 
 Image::~Image(void) {
+	this->shp_sem_.Wait();
 	if(this->img_tex_ != nullptr)
 		dtk_destroy_texture(this->img_tex_);
+	this->shp_sem_.Post();
 }
 
 bool Image::Set(const std::string& filename, unsigned int mxlvl) {

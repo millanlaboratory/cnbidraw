@@ -13,4 +13,10 @@ test_engine.trs
 test_shapes
 test_shapes.log
 test_shapes.trs
+test_images
+test_images.log
+test_images.trs
+test_strings
+test_strings.log
+test_strings.trs
 Makefile

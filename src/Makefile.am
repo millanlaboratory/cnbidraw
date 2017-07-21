@@ -13,7 +13,8 @@ libcnbidraw_include_HEADERS = Flags.hpp \
 						 	  CircleStrip.hpp \
 						 	  Cross.hpp \
 						 	  Rectangle.hpp \
-							  Image.hpp
+							  Image.hpp \
+							  String.hpp
 
 libcnbidraw_la_SOURCES = Flags.hpp \
 						 Engine.hpp \
@@ -35,7 +36,9 @@ libcnbidraw_la_SOURCES = Flags.hpp \
 						 Rectangle.hpp \
 						 Rectangle.cpp \
 						 Image.hpp \
-						 Image.cpp
+						 Image.cpp \
+						 String.hpp \
+						 String.cpp
 
 libcnbidraw_la_LIBADD = -ldrawtk -lSDL -lcnbicore
 libcnbidraw_la_LDFLAGS = $(AM_CFLAGS) \

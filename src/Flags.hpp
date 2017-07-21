@@ -21,4 +21,7 @@
 
 #define CNBIDRAW_IMAGE_DEFAULT_MXLVL		4
 
+#define CNBIDRAW_STRING_DEFAULT_FORMAT		"arial:style=bold italic"
+#define CNBIDRAW_STRING_DEFAULT_ALIGN		DTK_HMID|DTK_VMID
+
 #endif

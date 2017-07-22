@@ -19,4 +19,7 @@ test_images.trs
 test_strings
 test_strings.log
 test_strings.trs
+test_events
+test_events.log
+test_events.trs
 Makefile

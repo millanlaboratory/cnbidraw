@@ -21,6 +21,7 @@ class Engine : public CcThread, public Window {
       virtual ~Engine(void);
       
       void  Open(void);
+      void  Close(void);
       void  SetRefresh(float refresh);
       float GetRefresh(void);
      

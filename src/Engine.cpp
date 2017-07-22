@@ -17,14 +17,21 @@ Engine::Engine(const std::string& caption, unsigned int width, unsigned int heig
 }
 
 Engine::~Engine(void) {
-   if(this->IsRunning())
-      this->Stop();
-   
-   this->Join();
+    int ret;
+    this->Close();
+    ret = this->Join(); 
+    printf("[engine] - Return of Join: %d\n", ret);
 }
 
 void Engine::Open(void) {
-   this->Start();
+    if(this->IsRunning() == false)
+	this->Start();
+}
+
+void Engine::Close(void) {
+    if(this->IsRunning()) {
+	this->Stop();
+    }
 }
 
 void Engine::SetRefresh(float refresh) {

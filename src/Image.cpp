@@ -40,6 +40,8 @@ bool Image::Set(const std::string& filename, unsigned int mxlvl) {
 
 	this->shp_sem_.Post();
 
+	this->Create();
+
 	return retcod;
 }
 
@@ -47,9 +49,9 @@ void Image::Create(void) {
 	this->shp_sem_.Wait();
 	if(this->img_tex_ != nullptr) {
 		this->shp_ptr_ = dtk_create_image(this->shp_ptr_, 
-										  this->orig_x_, this->orig_y_,
-									  	  this->width_, this->height_, 
-									  	  this->color_, this->img_tex_);
+					  this->orig_x_, this->orig_y_,
+					  this->width_, this->height_, 
+					  this->color_, this->img_tex_);
 	}
 	this->shp_sem_.Post();
 }

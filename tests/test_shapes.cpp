@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
 	if(engine.Add("circle", &circle) == false)
 		fprintf(stderr, "[test_shapes] - Cannot add shape 'circle'\n");
 	if(engine.Add("strip", &strip) == false)
-		fprintf(stderr, "[test_shapes] - Cannot add shape 'circle'\n");
+		fprintf(stderr, "[test_shapes] - Cannot add shape 'strip'\n");
 	if(engine.Add("cross", &cross) == false)
 		fprintf(stderr, "[test_shapes] - Cannot add shape 'cross'\n");
 	if(engine.Add("arrow", &arrow) == false)

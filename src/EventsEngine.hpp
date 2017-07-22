@@ -12,6 +12,9 @@
 namespace cnbi {
 	namespace draw {
 
+typedef int			EventType;
+typedef struct dtk_keyevent	EventKeyboard;
+typedef struct dtk_mouseevent	EventMouse;
 
 class EventsEngine : public CcThread {
 
@@ -22,8 +25,10 @@ class EventsEngine : public CcThread {
 	void Open(void);
 	void Close(void);
 
-	std::function<void(void)> onQuit;
-	std::function<void(void)> onRedraw;
+	std::function<void(void)>	    onQuit;
+	std::function<void(void)>	    onRedraw;
+	std::function<void(EventKeyboard)>  onKeyboard;
+	std::function<void(EventMouse)>	    onMouse;
     
     protected:
 	void Main(void);

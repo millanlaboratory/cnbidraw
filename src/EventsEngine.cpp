@@ -6,14 +6,16 @@
 namespace cnbi {
 	namespace draw {
 
-int 		EventType;    
-dtk_keyevent	EventKeyboard;
-dtk_mouseevent	EventMouse;
+EventType	evttype;    
+EventKeyboard	evtkeyboard;
+EventMouse	evtmouse;
 
 EventsEngine::EventsEngine(Engine* engine) {
-	this->engine_  = engine;
-	this->onQuit   = nullptr;
-	this->onRedraw = nullptr;
+	this->engine_	 = engine;
+	this->onQuit   	 = nullptr;
+	this->onRedraw 	 = nullptr;
+	this->onKeyboard = nullptr;
+	this->onMouse	 = nullptr;
 }
 
 EventsEngine::~EventsEngine(void) {
@@ -29,26 +31,28 @@ void EventsEngine::Open(void) {
 }
 
 void EventsEngine::Close(void) {
-    if(this->IsRunning()) {
+    if(this->IsRunning())
 	this->Stop();
-    }
-
 }
 
 int event_handler(dtk_hwnd wnd, int type, const union dtk_event* evt) {
-    EventType = type;
+    evttype = type;
     switch(type) {
     	case DTK_EVT_QUIT:
     	    break;
     	case DTK_EVT_REDRAW:
 	   break;
     	case DTK_EVT_KEYBOARD:
-    	    printf("Event keyboard\n");
+	    evtkeyboard.sym   = evt->key.sym;
+	    evtkeyboard.state = evt->key.state;
+	    evtkeyboard.mod   = evt->key.mod;
     	    break;
     	case DTK_EVT_MOUSEBUTTON:
-    	    printf("Event mouse button\n");
     	case DTK_EVT_MOUSEMOTION:
-    	    printf("Event mouse motion\n");
+	    evtmouse.x	    = evt->mouse.x;
+	    evtmouse.y	    = evt->mouse.y;
+	    evtmouse.button = evt->mouse.button;
+	    evtmouse.state  = evt->mouse.state;
     	    break;
     }
     return 1;
@@ -83,18 +87,33 @@ void EventsEngine::Main(void) {
 	this->engine_->PostWindow();
 
 
-	switch(EventType) {
+	switch(evttype) {
 	    case DTK_EVT_QUIT:
-		if(this->onQuit != nullptr)
-		    this->onQuit();
 		this->engine_->WaitWindow();
 		this->engine_->Close();
 		this->engine_->PostWindow();
+		
+		if(this->onQuit != nullptr)
+		    this->onQuit();
+	
 		this->Close();
 		break;
 	    case DTK_EVT_REDRAW:
+		this->engine_->WaitWindow();
+		this->engine_->Refresh();
+		this->engine_->PostWindow();
+		
 		if(this->onRedraw != nullptr)
 		    this->onRedraw();
+		break;
+	    case DTK_EVT_KEYBOARD:
+		if(this->onKeyboard != nullptr)
+		    this->onKeyboard(evtkeyboard);
+		break;
+	    case DTK_EVT_MOUSEBUTTON:
+	    case DTK_EVT_MOUSEMOTION:
+		if(this->onMouse != nullptr)
+		    this->onMouse(evtmouse);
 		break;
 	    default:
 		break;

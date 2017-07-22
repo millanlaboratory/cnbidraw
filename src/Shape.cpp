@@ -132,7 +132,7 @@ void Shape::PostShape(void) {
 }
 
 dtk_hshape Shape::GetShapePtr(void) {
-	return this->shp_ptr_;
+      return this->shp_ptr_;
 }
 
 	}

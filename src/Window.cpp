@@ -69,7 +69,7 @@ void Window::GetBpp(unsigned int* bpp) {
 }
 
 dtk_hwnd Window::GetWindowPtr(void) {
-	return this->win_ptr_;
+    return this->win_ptr_;
 }
 
 void Window::OpenWindow(void) {

@@ -125,13 +125,16 @@ void Engine::Render(void) {
 
 	this->shps_sem_.Wait();
 	for(auto ordIt = this->shps_.BeginOrder(); ordIt != this->shps_.EndOrder(); ++ordIt) {
+	        
 		shpIt = this->shps_.FindShape(ordIt->second);	
 		
 		if(shpIt == this->shps_.EndShape())
 			continue;
-
+	        
+		shpIt->second->WaitShape();
 		if(shpIt->second->GetShapePtr() != nullptr)
 			dtk_draw_shape(shpIt->second->GetShapePtr());
+		shpIt->second->PostShape();
    }
    this->shps_sem_.Post();
 }

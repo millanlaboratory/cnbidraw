@@ -10,14 +10,30 @@ int 		EventType;
 dtk_keyevent	EventKeyboard;
 dtk_mouseevent	EventMouse;
 
-EventsEngine::EventsEngine(Window* win) {
-	this->win_ = win;
-	this->OnQuit   = nullptr;
-	this->OnRedraw = nullptr;
+EventsEngine::EventsEngine(Engine* engine) {
+	this->engine_  = engine;
+	this->onQuit   = nullptr;
+	this->onRedraw = nullptr;
 }
 
-EventsEngine::~EventsEngine(void) {}
+EventsEngine::~EventsEngine(void) {
+    int ret;
+    this->Close();
+    ret = this->Join();
+    printf("[events] - Return of Join: %d\n", ret);
+}
 
+void EventsEngine::Open(void) {
+    if(this->IsRunning() == false)
+	this->Start();
+}
+
+void EventsEngine::Close(void) {
+    if(this->IsRunning()) {
+	this->Stop();
+    }
+
+}
 
 int event_handler(dtk_hwnd wnd, int type, const union dtk_event* evt) {
     EventType = type;
@@ -44,9 +60,9 @@ void EventsEngine::Main(void) {
     bool once = true;
 
     while(this->IsRunning()) { 
-	this->win_->WaitWindow();
-	acquired = (this->win_->GetWindowPtr() != nullptr);
-	this->win_->PostWindow();
+	this->engine_->WaitWindow();
+	acquired = (this->engine_->GetWindowPtr() != nullptr);
+	this->engine_->PostWindow();
 
 	if(acquired){
 	    printf("Acquired window\n");
@@ -59,22 +75,26 @@ void EventsEngine::Main(void) {
 	}
     }
 
-    dtk_set_event_handler(this->win_->GetWindowPtr(), event_handler);
+    dtk_set_event_handler(this->engine_->GetWindowPtr(), event_handler);
 
     while(this->IsRunning()) {
-	this->win_->WaitWindow();
-	dtk_process_events(this->win_->GetWindowPtr());
-	this->win_->PostWindow();
+	this->engine_->WaitWindow();
+	dtk_process_events(this->engine_->GetWindowPtr());
+	this->engine_->PostWindow();
 
 
 	switch(EventType) {
 	    case DTK_EVT_QUIT:
-		if(this->OnQuit != nullptr)
-		    this->OnQuit();
+		if(this->onQuit != nullptr)
+		    this->onQuit();
+		this->engine_->WaitWindow();
+		this->engine_->Close();
+		this->engine_->PostWindow();
+		this->Close();
 		break;
 	    case DTK_EVT_REDRAW:
-		if(this->OnRedraw != nullptr)
-		    this->OnRedraw();
+		if(this->onRedraw != nullptr)
+		    this->onRedraw();
 		break;
 	    default:
 		break;

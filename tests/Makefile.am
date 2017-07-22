@@ -17,6 +17,6 @@ test_strings_LDADD = -lcnbicore -ldrawtk $(top_builddir)/src/libcnbidraw.la
 test_events_SOURCES = test_events.cpp
 test_events_LDADD = -lcnbicore -ldrawtk $(top_builddir)/src/libcnbidraw.la 
 
-TESTS = test_engine test_shapes test_images test_strings test_events
+#TESTS = test_engine test_shapes test_images test_strings test_events
 
 

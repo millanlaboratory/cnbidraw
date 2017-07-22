@@ -6,7 +6,7 @@
 #include <dtk_event.h>
 #include <cnbicore/CcCallback.hpp>
 #include <cnbicore/CcThread.hpp>
-#include "Window.hpp"
+#include "Engine.hpp"
 #include "EventsHandler.hpp"
 
 namespace cnbi {
@@ -16,18 +16,20 @@ namespace cnbi {
 class EventsEngine : public CcThread {
 
     public:
-	EventsEngine(Window* win);
+	EventsEngine(Engine* engine);
 	virtual ~EventsEngine(void);
 
-	std::function<void(void)> OnQuit;
-	std::function<void(void)> OnRedraw;
-	//CcCallback1<EventsHandler, EventsEngine*> i_OnQuit;
-	//CcCallback1<EventsHandler, EventsEngine*> i_OnRedraw;
+	void Open(void);
+	void Close(void);
+
+	std::function<void(void)> onQuit;
+	std::function<void(void)> onRedraw;
+    
     protected:
 	void Main(void);
     	       
     private:
-	Window*	win_;
+	Engine*	engine_;
 };
 
 	}

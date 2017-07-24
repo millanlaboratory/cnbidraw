@@ -2,6 +2,7 @@
 #define CNBIDRAW_STRING_HPP
 
 #include "Shape.hpp"
+#include "Font.hpp"
 
 namespace cnbi {
 	namespace draw {
@@ -15,7 +16,7 @@ class String : public Shape {
 		virtual void Create(void);
 
 
-		bool SetFormat(const std::string& format);
+		bool SetFont(Font* font);
 		void SetAlign(unsigned int align);
 		void SetSize(float size);
 
@@ -28,11 +29,10 @@ class String : public Shape {
 		static const unsigned int ToRight  = DTK_LEFT;
 
 	private:
-		dtk_hfont		str_font_;
-		std::string		str_format_;
-		unsigned int	str_align_;
-		std::string		str_text_;
-		float			str_size_;
+		Font*			font_;
+		unsigned int	align_;
+		std::string		text_;
+		float			size_;
 };
 
 

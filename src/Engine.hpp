@@ -2,7 +2,7 @@
 #define CNBIDRAW_ENGINE_HPP
 
 #include <drawtk.h>
-#include <cnbicore/CcBasic.hpp>
+#include <cnbicore/CcSemaphore.hpp>
 #include <cnbicore/CcThread.hpp>
 
 #include "Flags.hpp"
@@ -16,34 +16,34 @@ namespace cnbi {
 class Engine : public CcThread, public Window {
     
     public:
-	Engine(void);
-	Engine(const std::string& caption, unsigned int width, unsigned int height);
-	virtual ~Engine(void);
-	
-	void  Open(void);
-	void  Close(void);
-	void  SetRefresh(float refresh);
-	float GetRefresh(void);
-	void  Refresh(void);
-	
-	bool Add(const std::string& name, Shape* shp, bool overwrite = true);
-	bool Remove(const std::string& name);
-	bool Raise(const std::string& name);
-	bool RaiseTop(const std::string& name);
-	bool Lower(const std::string& name);
-	bool LowerBottom(const std::string& name);
+		Engine(void);
+		Engine(const std::string& caption, unsigned int width, unsigned int height);
+		virtual ~Engine(void);
+		
+		void  Open(void);
+		void  Close(void);
+		void  SetRefresh(float refresh);
+		float GetRefresh(void);
+		void  Refresh(void);
+		
+		bool Add(const std::string& name, Shape* shp, bool overwrite = true);
+		bool Remove(const std::string& name);
+		bool Raise(const std::string& name);
+		bool RaiseTop(const std::string& name);
+		bool Lower(const std::string& name);
+		bool LowerBottom(const std::string& name);
 
-	void Dump(void);
+		void Dump(void);
 
     protected:
-	void Main(void);
-	void Render(void);
+		void Main(void);
+		void Render(void);
 
     private:
-	CcSemaphore shps_sem_;
-	CcSemaphore eng_sem_;
-	ShapeMap    shps_;
-	float	    refresh_;
+		CcSemaphore shps_sem_;
+		CcSemaphore eng_sem_;
+		ShapeMap    shps_;
+		float	    refresh_;
 };
 
    }

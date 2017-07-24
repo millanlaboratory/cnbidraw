@@ -6,8 +6,9 @@ libcnbidraw_includedir = $(includedir)/cnbidraw
 libcnbidraw_include_HEADERS = Flags.hpp \
 							  Engine.hpp \
 							  Window.hpp \
-							  EventsEngine.hpp \
-							  EventsHandler.hpp \
+							  Events.hpp \
+							  EventKeyboard.hpp \
+							  EventMouse.hpp \
 							  Shape.hpp \
 							  ShapeMap.hpp \
 						 	  Arrow.hpp \
@@ -16,17 +17,20 @@ libcnbidraw_include_HEADERS = Flags.hpp \
 						 	  Cross.hpp \
 						 	  Rectangle.hpp \
 							  Image.hpp \
-							  String.hpp
+							  String.hpp \
+							  Font.hpp
 
 libcnbidraw_la_SOURCES = Flags.hpp \
 						 Engine.hpp \
 						 Engine.cpp \
 						 Window.hpp \
 						 Window.cpp \
-						 EventsEngine.hpp \
-						 EventsEngine.cpp \
-						 EventsHandler.hpp \
-						 EventsHandler.cpp \
+						 Events.hpp \
+						 Events.cpp \
+						 EventKeyboard.hpp \
+						 EventKeyboard.cpp \
+						 EventMouse.hpp \
+						 EventMouse.cpp \
 						 Shape.hpp \
 						 Shape.cpp \
 						 ShapeMap.hpp \
@@ -44,7 +48,9 @@ libcnbidraw_la_SOURCES = Flags.hpp \
 						 Image.hpp \
 						 Image.cpp \
 						 String.hpp \
-						 String.cpp
+						 String.cpp \
+						 Font.hpp \
+						 Font.cpp
 
 libcnbidraw_la_LIBADD = -ldrawtk -lSDL -lcnbicore
 libcnbidraw_la_LDFLAGS = $(AM_CFLAGS) \

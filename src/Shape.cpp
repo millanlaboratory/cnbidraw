@@ -89,8 +89,7 @@ void Shape::SetColor(const float* color) {
 	this->color_[0] = color[0];
 	this->color_[1] = color[1];
 	this->color_[2] = color[2];
-	this->color_[3] = color[3];
-	dtk_setcolor_shape(this->shp_ptr_, this->color_, 0);
+	dtk_setcolor_shape(this->shp_ptr_, this->color_, DTK_IGNA);
 	this->shp_sem_.Post();
 }
 
@@ -119,8 +118,10 @@ float Shape::GetAlpha(void) {
 	return alpha;
 }
 
-const float* Shape::GetColor(void) {
-	return this->color_;
+void Shape::GetColor(float* color) {
+	this->shp_sem_.Wait();
+	memcpy(color, this->color_, 4*sizeof(float));
+	this->shp_sem_.Post();
 }
 
 void Shape::WaitShape(void) {
@@ -131,8 +132,11 @@ void Shape::PostShape(void) {
 	this->shp_sem_.Post();
 }
 
-dtk_hshape Shape::GetShapePtr(void) {
-      return this->shp_ptr_;
+void Shape::Draw(void) {
+	this->shp_sem_.Wait();
+	if(this->shp_ptr_ != nullptr)
+		dtk_draw_shape(this->shp_ptr_);
+	this->shp_sem_.Post();
 }
 
 	}

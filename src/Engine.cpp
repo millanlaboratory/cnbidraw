@@ -25,12 +25,14 @@ Engine::~Engine(void) {
 
 void Engine::Open(void) {
     if(this->IsRunning() == false)
-	this->Start();
+		this->Start();
 }
 
 void Engine::Close(void) {
+    this->eng_sem_.Wait();
     if(this->IsRunning())
-	this->Stop();
+		this->Stop();
+    this->eng_sem_.Post();
 }
 
 void Engine::SetRefresh(float refresh) {
@@ -114,44 +116,40 @@ void Engine::Main(void) {
     this->OpenWindow();
     
     while(CcThread::IsRunning()) {
-	this->WaitWindow();
-	dtk_clear_screen(this->GetWindowPtr());
-	this->Render();
-	dtk_update_screen(this->GetWindowPtr());
-	this->PostWindow();
-	
-	CcTime::Sleep(1000.0f/this->GetRefresh());
+		this->ClearWindow();
+		this->Render();
+		this->UpdateWindow();
+		CcTime::Sleep(1000.0f/this->GetRefresh());
     }
     
     this->CloseWindow();
 }
 
 void Engine::Render(void) {
-    MShapeIt shpIt;
+	MShapeIt shpIt;
     
-    this->shps_sem_.Wait();
+	this->shps_sem_.Wait();
     for(auto ordIt = this->shps_.BeginOrder(); ordIt != this->shps_.EndOrder(); ++ordIt) {
 	
-	shpIt = this->shps_.FindShape(ordIt->second);	
+		shpIt = this->shps_.FindShape(ordIt->second);	
 	
-	if(shpIt == this->shps_.EndShape())
-	    continue;
+		if(shpIt == this->shps_.EndShape())
+			continue;
 	
-	shpIt->second->WaitShape();
-	if(shpIt->second->GetShapePtr() != nullptr)
-	    dtk_draw_shape(shpIt->second->GetShapePtr());
-	shpIt->second->PostShape();
-   }
-   this->shps_sem_.Post();
+		shpIt->second->Draw();
+	}
+	this->shps_sem_.Post();
 }
 
 void Engine::Refresh(void) {
-    dtk_clear_screen(this->GetWindowPtr());
-    dtk_update_screen(this->GetWindowPtr());
+	this->ClearWindow();
+	this->UpdateWindow();
 }
 
 void Engine::Dump(void) {
+	this->shps_sem_.Wait();
     this->shps_.Dump();
+	this->shps_sem_.Post();
 }
 
     }

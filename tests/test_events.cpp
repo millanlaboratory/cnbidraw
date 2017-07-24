@@ -1,5 +1,5 @@
 #include "Engine.hpp"
-#include "CircleStrip.hpp"
+#include "Ring.hpp"
 #include "String.hpp"
 #include "Events.hpp"
 
@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
 	const std::string text3 = "Press space to change shapes color";
 	
 
-	cnbi::draw::CircleStrip	strip(0.1f, 0.05f, dtk_blue);
+	cnbi::draw::Ring	ring(0.1f, 0.05f, dtk_blue);
 
 	cnbi::draw::String string1(text1, 0.1f, dtk_white);
 	cnbi::draw::String string2(text2, 0.1f, dtk_white);
@@ -75,15 +75,15 @@ int main(int argc, char** argv) {
 	string2.Create();
 	string1.Create();
 	string3.Create();
-	strip.Create();
+	ring.Create();
 	
 	events.onQuit   = callback_simple_quit;
 	events.onRedraw = std::bind(&handler::HandleRedraw, hdl);
 	events.onMouse  = callback_simple_mouse;
 	events.onKeyboard = std::bind(&handler::HandleKeyboard, hdl, std::placeholders::_1);
 
-	if(engine.Add("strip", &strip) == false)
-		fprintf(stderr, "[test_events] - Cannot add shape 'strip'\n");
+	if(engine.Add("ring", &ring) == false)
+		fprintf(stderr, "[test_events] - Cannot add shape 'ring'\n");
 	if(engine.Add("string2", &string2) == false)
 		fprintf(stderr, "[test_events] - Cannot add shape 'string2'\n");
 	if(engine.Add("string1", &string1) == false)
@@ -104,7 +104,7 @@ int main(int argc, char** argv) {
 	CcTime::Tic(&tic);
 	while(engine.IsRunning() & events.IsRunning()) {
 	
-	    strip.Move(mouse_x, mouse_y);
+	    ring.Move(mouse_x, mouse_y);
 	    
 	    if(mouse_state == 1) {
 			showhide = !showhide;	
@@ -116,15 +116,15 @@ int main(int argc, char** argv) {
 		}
 
 	    if(showhide == true) {
-			strip.Show();
+			ring.Show();
 	    } else {
-			strip.Hide();
+			ring.Hide();
 	    }
 
 		if(changecolor == true) {
-			strip.SetColor(dtk_red);
+			ring.SetColor(dtk_red);
 		} else {
-			strip.SetColor(dtk_blue);
+			ring.SetColor(dtk_blue);
 		}
 
 		if(keyboard_esc)

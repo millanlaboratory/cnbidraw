@@ -1,6 +1,6 @@
 m4_define([lib_current],1)
 m4_define([lib_revision],0)
-m4_define([lib_age],1)
+m4_define([lib_age],0)
 
 AC_INIT(cnbidraw,[lib_current.lib_revision.lib_age],
 		luca.tonin@epfl.ch)

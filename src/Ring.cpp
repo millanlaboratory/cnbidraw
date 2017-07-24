@@ -1,12 +1,12 @@
-#ifndef CNBIDRAW_CIRCLE_STRIP_CPP
-#define CNBIDRAW_CIRCLE_STRIP_CPP
+#ifndef CNBIDRAW_RING_CPP
+#define CNBIDRAW_RING_CPP
 
-#include "CircleStrip.hpp"
+#include "Ring.hpp"
 
 namespace cnbi {
 	namespace draw {
 
-CircleStrip::CircleStrip(float radius, float thick, const float* color, unsigned int npoints) :
+Ring::Ring(float radius, float thick, const float* color, unsigned int npoints) :
 		     Circle(radius, color, 1.0f, npoints) {
 
 	this->shp_sem_.Wait();
@@ -26,9 +26,9 @@ CircleStrip::CircleStrip(float radius, float thick, const float* color, unsigned
 	this->shp_sem_.Post();
 }
 
-CircleStrip::~CircleStrip(void){};
+Ring::~Ring(void){};
 
-void CircleStrip::Create(void) {
+void Ring::Create(void) {
 	this->shp_sem_.Wait();
 
 	this->shp_ptr_ = dtk_create_circle_str(this->shp_ptr_, this->orig_x_,
@@ -38,7 +38,7 @@ void CircleStrip::Create(void) {
 	this->shp_sem_.Post();
 }
 
-float CircleStrip::GetThick(void) {
+float Ring::GetThick(void) {
 	float thick;
 	this->shp_sem_.Wait();
 	thick = this->thick_;

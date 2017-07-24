@@ -13,9 +13,9 @@ libcnbidraw_include_HEADERS = Flags.hpp \
 							  ShapeMap.hpp \
 						 	  Arrow.hpp \
 						 	  Circle.hpp \
-						 	  CircleStrip.hpp \
 						 	  Cross.hpp \
 						 	  Rectangle.hpp \
+						 	  Ring.hpp \
 							  Image.hpp \
 							  String.hpp \
 							  Font.hpp
@@ -39,12 +39,12 @@ libcnbidraw_la_SOURCES = Flags.hpp \
 						 Arrow.cpp \
 						 Circle.hpp \
 						 Circle.cpp \
-						 CircleStrip.hpp \
-						 CircleStrip.cpp \
 						 Cross.hpp \
 						 Cross.cpp \
 						 Rectangle.hpp \
 						 Rectangle.cpp \
+						 Ring.hpp \
+						 Ring.cpp \
 						 Image.hpp \
 						 Image.cpp \
 						 String.hpp \

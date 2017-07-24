@@ -9,6 +9,9 @@ namespace cnbi {
 Font::Font(const std::string& name) {
 	this->name_ = name;
 	this->font_ = dtk_load_font(name.c_str());
+
+	if(this->font_ == nullptr)
+		this->font_ = dtk_load_font(CNBIDRAW_FONT_DEFAULT);
 }
 
 Font::~Font(void) {}

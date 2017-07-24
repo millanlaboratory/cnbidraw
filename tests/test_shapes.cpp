@@ -1,7 +1,7 @@
 #include "Engine.hpp"
 #include "Rectangle.hpp"
 #include "Circle.hpp"
-#include "CircleStrip.hpp"
+#include "Ring.hpp"
 #include "Cross.hpp"
 #include "Arrow.hpp"
 
@@ -10,15 +10,15 @@ int main(int argc, char** argv) {
 
 	float rect_width, rect_height;
 	float circle_radius;
-	float strip_radius, strip_thick;
+	float ring_radius, ring_thick;
 	float cross_size, cross_thick;
 	float arrow_width, arrow_height;
 
 	rect_width    = 0.7f;
 	rect_height   = 0.3f;
 	circle_radius = 0.7f;
-	strip_radius  = 0.6f;
-	strip_thick   = 0.05f;
+	ring_radius  = 0.6f;
+	ring_thick   = 0.05f;
 	cross_size    = 0.2f;
 	cross_thick   = 0.05f;
 	arrow_width	  = 0.4;
@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
 
 	cnbi::draw::Rectangle   rectangle(rect_width, rect_height, dtk_red);
 	cnbi::draw::Circle		circle(circle_radius, dtk_green);
-	cnbi::draw::CircleStrip	strip(strip_radius, strip_thick, dtk_blue);
+	cnbi::draw::Ring		ring(ring_radius, ring_thick, dtk_blue);
 	cnbi::draw::Cross	    cross(cross_size, cross_thick, dtk_white);
 	cnbi::draw::Arrow	    arrow(arrow_width, arrow_height, dtk_cyan);
 
@@ -38,8 +38,8 @@ int main(int argc, char** argv) {
 	printf("[test_shapes] - Create circle (radius=%f)\n", circle_radius);
 	circle.Create();
 	
-	printf("[test_shapes] - Create circular strip (radius=%f, thick=%f)\n", strip_radius, strip_thick);
-	strip.Create();
+	printf("[test_shapes] - Create circular ring (radius=%f, thick=%f)\n", ring_radius, ring_thick);
+	ring.Create();
 	
 	printf("[test_shapes] - Create cross (size=%f, thick=%f)\n", cross_size, cross_thick);
 	cross.Create();
@@ -52,8 +52,8 @@ int main(int argc, char** argv) {
 		fprintf(stderr, "[test_shapes] - Cannot add shape 'rectangle'\n");
 	if(engine.Add("circle", &circle) == false)
 		fprintf(stderr, "[test_shapes] - Cannot add shape 'circle'\n");
-	if(engine.Add("strip", &strip) == false)
-		fprintf(stderr, "[test_shapes] - Cannot add shape 'strip'\n");
+	if(engine.Add("ring", &ring) == false)
+		fprintf(stderr, "[test_shapes] - Cannot add shape 'ring'\n");
 	if(engine.Add("cross", &cross) == false)
 		fprintf(stderr, "[test_shapes] - Cannot add shape 'cross'\n");
 	if(engine.Add("arrow", &arrow) == false)
@@ -69,8 +69,8 @@ int main(int argc, char** argv) {
 	engine.Dump();
     CcTime::Sleep(2000);
 	
-	printf("[test_shapes] - Lower strip to Bottom:\n");
-	engine.LowerBottom("strip");
+	printf("[test_shapes] - Lower ring to Bottom:\n");
+	engine.LowerBottom("ring");
 	engine.Dump();
     CcTime::Sleep(2000);
 	
@@ -79,8 +79,8 @@ int main(int argc, char** argv) {
 	engine.Dump();
     CcTime::Sleep(2000);
 	
-	printf("[test_shapes] - Raise strip to Top:\n");
-	engine.RaiseTop("strip");
+	printf("[test_shapes] - Raise ring to Top:\n");
+	engine.RaiseTop("ring");
 	engine.Dump();
     CcTime::Sleep(2000);
 	
@@ -102,9 +102,9 @@ int main(int argc, char** argv) {
 		arrow.RelRotate(-1.0f);
 
 		if((int)(CcTime::Toc(&tic)/1000) % 2 == 0) {
-			strip.Show();
+			ring.Show();
 		} else {
-			strip.Hide();
+			ring.Hide();
 		}
 
 		if(CcTime::Toc(&tic) > 5000)

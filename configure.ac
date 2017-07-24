@@ -49,5 +49,6 @@ src/Makefile
 src/cnbidraw.pc
 tests/Makefile
 doc/Makefile 
+doc/doxygen.cfg
 doc/examples/Makefile])
 AC_OUTPUT

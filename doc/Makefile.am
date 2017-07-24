@@ -1,10 +1,9 @@
 EXTRA_DIST = doxygen.cfg.in
-#SUBDIRS = \
 
 html: html/index.html
 
 html/index.html:
-	doxygen $(builddir)/doxygen.cfg
+	doxygen doxygen.cfg
 
 installdirs-local: installdirs-html
 

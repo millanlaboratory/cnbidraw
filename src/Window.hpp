@@ -15,7 +15,17 @@ namespace cnbi {
 /*! \brief Window class
  *
  * The class implements a window object and the related functionalities. The
- * class is thread-safe.
+ * class is thread-safe. drawtk legacy: the window's coordinates are defined as
+ * follow:
+ *
+ *	- Left-Top coordinates:		(-r, 1)
+ *	- Rigth-Top coordinates:		(r, 1)
+ *	- Left-Bottom coordinates:		(-r, -1)
+ *	- Right-Bottom coordinates:	(r, -1)
+ *	- Center coordinates:		(0, 0)
+ *
+ * where \f$r\f$ is the ratio between the window sizes, defined as: \f$ r=\frac{BigDim}{SmallDim} \f$ in pixel
+ *
  */
 class Window {
 

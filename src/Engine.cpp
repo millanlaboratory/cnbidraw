@@ -119,6 +119,9 @@ void Engine::Main(void) {
 		this->ClearWindow();
 		this->Render();
 		this->UpdateWindow();
+
+		this->ProcessEvents();
+		
 		CcTime::Sleep(1000.0f/this->GetRefresh());
     }
     

@@ -74,7 +74,6 @@ void Events::Main(void) {
 
     while(this->IsRunning()) {
 		
-		this->engine_->ProcessEvents();
 
 		switch(evttype) {
 		    case DTK_EVT_QUIT:
@@ -86,7 +85,7 @@ void Events::Main(void) {
 				this->Stop();
 				break;
 		    case DTK_EVT_REDRAW:
-				this->engine_->Refresh();
+				//this->engine_->Refresh();
 			
 				if(this->onRedraw != nullptr)
 					this->onRedraw();

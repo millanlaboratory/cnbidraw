@@ -17,11 +17,23 @@ class String : public Shape {
 	public:
 		/*! \brief Constructor
 		 *
+		 * Full constructor with string's text
+		 *
 		 * \param	text	String's text
 		 * \param	size	String's size
 		 * \param	color	String's color
 		 */
 		String(const std::string& text, float size, const float* color);
+		
+		/*! \brief Constructor
+		 *
+		 * Partial constructor withour string's text (to be set with SetText
+		 * method)
+		 *
+		 * \param	size	String's size
+		 * \param	color	String's color
+		 */
+		String(float size, const float* color);
 		
 		/*! \brief Destructor
 		 */
@@ -42,6 +54,13 @@ class String : public Shape {
 		 * \return	True if the font is set, false otherwise
 		 */
 		bool SetFont(Font* font);
+		
+		/*! \brief Set text method
+		 * It set the given text to the current string.
+		 *
+		 * \param	text	Text of the string
+		 */
+		void SetText(const std::string& text);
 		
 		/*! \brief Set align method
 		 * It sets the alignement of the string according to the given argument

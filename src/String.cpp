@@ -20,6 +20,21 @@ String::String(const std::string& text, float size, const float* color) {
 	this->font_		= nullptr;
 }
 
+String::String(float size, const float* color) {
+	this->height_	= 0.0;
+	this->width_  	= 0.0f;
+	this->filled_	= 1;	
+	this->color_[0] = color[0];
+	this->color_[1] = color[1];
+	this->color_[2] = color[2];
+	this->color_[3] = color[3];
+	this->text_     = "";
+	this->size_		= size;
+	this->align_	= CNBIDRAW_STRING_DEFAULT_ALIGN;
+	this->font_		= nullptr;
+}
+
+
 String::~String(void) {}
 
 bool String::SetFont(Font* font) {
@@ -35,6 +50,15 @@ bool String::SetFont(Font* font) {
 		this->Create();
 
 	return retcod;
+}
+
+void String::SetText(const std::string& text) {
+	this->shp_sem_.Wait();
+	this->text_ = text;
+	this->shp_sem_.Post();
+	
+	if(this->shp_ptr_ != nullptr)
+		this->Create();
 }
 
 void String::SetAlign(unsigned int align) {

@@ -20,7 +20,7 @@ class Image : public Shape {
 		 * image color mask will be changed.
 		 *
 		 * \param	width	Image's frame width
-		 * \param	height	Image's height
+		 * \param	height	Image's frame height
 		 * \param	color	Image's color
 		 */
 		Image(float width, float height, const float* color = dtk_white);

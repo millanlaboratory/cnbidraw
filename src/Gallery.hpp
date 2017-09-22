@@ -46,6 +46,14 @@ class Gallery : public Image {
 		 */ 
 		bool SetFolder(const std::string& folder, const std::vector<std::string> exts);
 
+		/*! \brief The number of images in the gallery
+		 * It returns the number of the image in the gallery
+		 *
+		 * \return	Number of images in the gallery
+		 *
+		 */ 
+		size_t Size(void);
+
 		/*! \brief Select (display) the current image
 		 * It selects and display the image currently pointed by the internal
 		 * iterator.
@@ -130,10 +138,9 @@ class Gallery : public Image {
 	protected:
 		bool HasExtension(const std::string& name, const std::string& ext);
 
-	public:
-		std::vector<std::string>	list;
 
 	private:
+		std::vector<std::string>	list_;
 		GalleryIt	current_;
 		std::string	folder_;
 

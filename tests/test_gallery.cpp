@@ -31,15 +31,15 @@ int main(int argc, char** argv) {
 		exit(1);
 	}
 
-	if(gallery->list.size() == 0) {
+	if(gallery->Size() == 0) {
 		printf("[test_gallery] + No images in the folder: '%s'. Exit.\n", path.c_str());
 		exit(1);
 	}
 
 	
 
-	printf("[test_gallery] + Found %lu images on folder '%s':\n", gallery->list.size(), path.c_str());
-	for(auto it = gallery->list.begin(); it!=gallery->list.end(); ++it) 
+	printf("[test_gallery] + Found %lu images on folder '%s':\n", gallery->Size(), path.c_str());
+	for(auto it = gallery->Begin(); it!=gallery->End(); ++it) 
 		printf("               |- %s\n", (*it).c_str());
 
 	

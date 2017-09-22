@@ -29,19 +29,23 @@ bool Gallery::SetFolder(const std::string& folder, const std::vector<std::string
 	while((entry = readdir(dir)) != nullptr) {
 		for(auto it=exts.begin(); it!=exts.end(); ++it) {
 			if(this->HasExtension(entry->d_name, *it)) {
-				this->list.push_back(entry->d_name);
+				this->list_.push_back(entry->d_name);
 			}
 		}
 	}
 
 	closedir(dir);
 	
-	std::sort(this->list.begin(), this->list.end());
+	std::sort(this->list_.begin(), this->list_.end());
 	this->current_ = this->Begin();
 	this->folder_  = folder;
 	this->PostShape();
 
 	return true;
+}
+
+size_t Gallery::Size(void) {
+	return this->list_.size();
 }
 
 bool Gallery::HasExtension(const std::string& name, const std::string& ext) {
@@ -87,11 +91,11 @@ GalleryIt Gallery::Current(void) {
 
 
 GalleryIt Gallery::Begin(void) {
-	return this->list.begin();
+	return this->list_.begin();
 }
 
 GalleryIt Gallery::End(void) {
-	return this->list.end();
+	return this->list_.end();
 }
 
 bool Gallery::Select(GalleryIt it) {

@@ -18,7 +18,8 @@ libcnbidraw_include_HEADERS = Flags.hpp \
 						 	  Ring.hpp \
 							  Image.hpp \
 							  String.hpp \
-							  Font.hpp
+							  Font.hpp \
+							  Gallery.hpp
 
 libcnbidraw_la_SOURCES = Flags.hpp \
 						 Engine.hpp \
@@ -50,7 +51,9 @@ libcnbidraw_la_SOURCES = Flags.hpp \
 						 String.hpp \
 						 String.cpp \
 						 Font.hpp \
-						 Font.cpp
+						 Font.cpp \
+						 Gallery.hpp \
+						 Gallery.cpp
 
 libcnbidraw_la_LIBADD = -ldrawtk -lSDL -lcnbicore
 libcnbidraw_la_LDFLAGS = $(AM_CFLAGS) \

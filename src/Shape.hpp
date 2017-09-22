@@ -149,8 +149,9 @@ class Shape {
 		 */
 		void PostShape(void);
 
-	protected:
+	public:
 		dtk_hshape 	shp_ptr_;
+	protected:
 		CcSemaphore shp_sem_;
 		float		curr_x_;
 		float 		curr_y_;

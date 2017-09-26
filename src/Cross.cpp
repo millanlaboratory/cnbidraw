@@ -6,34 +6,45 @@
 namespace cnbi {
 	namespace draw {
 
-Cross::Cross(float size, float thick, const float* color, int filled) {
+Cross::Cross(float size, float thick, const float* color) {
 	this->height_ = size;
 	this->width_  = size;
 	this->thick_  = thick;
-	this->filled_   = filled;	
-	this->color_[0] = color[0];
-	this->color_[1] = color[1];
-	this->color_[2] = color[2];
-	this->color_[3] = color[3];
-	this->shp_hrect_ = nullptr;
-	this->shp_vrect_ = nullptr;
+	
+	/**** Fill initialization ****/
+	this->hrect_shp_ = nullptr;
+	this->vrect_shp_ = nullptr;
+	
+	this->fill_color_[0] = color[0];
+	this->fill_color_[1] = color[1];
+	this->fill_color_[2] = color[2];
+	this->fill_color_[3] = color[3];
+
+	// Create fill shape
+	this->CreateFill();
+
+	// Create stroke shape (no stroke for the moment)
+	this->CreateStroke();
+
+	// Create shape
+	this->Create();
 }
 
 Cross::~Cross(void) {}
 
-void Cross::Create(void) {
+void Cross::CreateFill(void) {
 	this->shp_sem_.Wait();	
 	dtk_hshape shps[] = {
-		this->shp_hrect_ = dtk_create_rectangle_hw(this->shp_hrect_, 
+		this->hrect_shp_ = dtk_create_rectangle_hw(this->hrect_shp_, 
 								this->orig_x_, this->orig_y_, 
-								this->width_, this->thick_, this->filled_,
-								this->color_), 
-		this->shp_vrect_ = dtk_create_rectangle_hw(this->shp_vrect_, 
+								this->width_, this->thick_, 1,
+								this->fill_color_), 
+		this->vrect_shp_ = dtk_create_rectangle_hw(this->vrect_shp_, 
 								this->orig_x_, this->orig_y_, 
-			   					this->thick_, this->height_, this->filled_,
-								this->color_)
+			   					this->thick_, this->height_, 1,
+								this->fill_color_)
 	};
-	this->shp_ptr_ = dtk_create_composite_shape(this->shp_ptr_, sizeof(shps)/sizeof(shps[0]), shps, 1);
+	this->fill_ptr_ = dtk_create_composite_shape(this->fill_ptr_, sizeof(shps)/sizeof(shps[0]), shps, 1);
 	this->shp_sem_.Post();	
 }
 

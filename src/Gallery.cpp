@@ -6,9 +6,7 @@
 namespace cnbi {
     namespace draw {
 
-Gallery::Gallery(float width, float height) : Image(width, height) {
-
-}
+Gallery::Gallery(float width, float height) : Image(width, height) {}
 
 
 Gallery::~Gallery(void) {}

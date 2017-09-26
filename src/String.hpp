@@ -39,12 +39,6 @@ class String : public Shape {
 		 */
 		virtual ~String(void);
 
-		/*! \brief Creation method
-		 * It actually creates the shape by using dtk_create_shape
-		 * functionalities. Call to String::SetFont method should happen before
-		 * the creation of the shape.
-		 */
-		virtual void Create(void);
 
 		/*! \brief Set font method
 		 * It applies the given Font to the current string. It must be called
@@ -76,6 +70,10 @@ class String : public Shape {
 		 * \param	size	String's size
 		 */
 		void SetSize(float size);
+
+	protected:
+		virtual void CreateFill(void);
+		virtual void CreateStroke(void);
 
 	public:
 		/// Vertical alignment to the bottom

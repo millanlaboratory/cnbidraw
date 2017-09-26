@@ -24,19 +24,16 @@ int main(int argc, char** argv) {
 	if(image1.Set(filename1) == false) {
 		fprintf(stderr, "[test_images] - Cannot load the image: %s\n", filename1.c_str());
 		return EXIT_FAILURE;
+	} else {
+		printf("[test_images] - Create image1 (width=%f, height=%f)\n", image1_width, image1_height);
 	}
 	
 	if(image2.Set(filename2) == false) {
 		fprintf(stderr, "[test_images] - Cannot load the image: %s\n", filename2.c_str());
 		return EXIT_FAILURE;
-	}
-
-	printf("[test_images] - Create image1 (width=%f, height=%f)\n", image1_width, image1_height);
-	image1.Create();
-	
+	} else {
 	printf("[test_images] - Create image2 (width=%f, height=%f)\n", image2_width, image2_height);
-	image2.Create();
-
+	}
 
 	printf("[test_images] - Add images to the engine\n");	
 	if(engine.Add("image1", &image1) == false) 
@@ -47,6 +44,19 @@ int main(int argc, char** argv) {
 	printf("[test_images] - Start the engine and dumping:\n");
 	engine.Dump();
 	engine.Open();
+
+
+	printf("[test_images] - Add border to image2\n");
+	image2.SetStroke(0.05f, dtk_green);
+	CcTime::Sleep(2000.0f);
+	
+	printf("[test_images] - Hide border to image2\n");
+	image2.Hide(cnbi::draw::Shape::Stroke);
+	CcTime::Sleep(2000.0f);
+	
+	printf("[test_images] - Show border to image2\n");
+	image2.Show(cnbi::draw::Shape::Stroke);
+	CcTime::Sleep(2000.0f);
 
 	printf("[test_images] - Start image tests\n");
 	CcTimeValue tic;

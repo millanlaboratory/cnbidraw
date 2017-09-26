@@ -28,14 +28,7 @@ class Image : public Shape {
 		/*! \brief Destructor
 		 */
 		virtual ~Image(void);
-
-		/*! \brief Creation method
-		 * It actually creates the shape by using dtk_create_shape
-		 * functionalities. Call to Image::Set method should happen before the
-		 * creation of the shape.
-		 */
-		virtual void Create(void);
-
+		
 		/*! \brief Set method
 		 * It loads an external image and it set it as the texture for the
 		 * shape.
@@ -54,8 +47,13 @@ class Image : public Shape {
 		 * \return	True if the image exists, false otherwise
 		 * */
 		bool GetSize(unsigned int* w_px, unsigned int* h_px);
+
+	protected:
+		virtual void CreateFill(void);
+		virtual void CreateStroke(void);
+
 	private:
-		dtk_htex	img_tex_;
+		dtk_htex	tex_ptr_;
 };
 
 

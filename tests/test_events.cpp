@@ -72,11 +72,6 @@ int main(int argc, char** argv) {
 	string2.SetFont(&font);
 	string3.SetFont(&font);
 	
-	string2.Create();
-	string1.Create();
-	string3.Create();
-	ring.Create();
-	
 	events.onQuit   = callback_simple_quit;
 	events.onRedraw = std::bind(&handler::HandleRedraw, hdl);
 	events.onMouse  = callback_simple_mouse;

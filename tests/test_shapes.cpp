@@ -26,27 +26,21 @@ int main(int argc, char** argv) {
 
 	cnbi::draw::Engine 	engine;
 
-	cnbi::draw::Rectangle   rectangle(rect_width, rect_height, dtk_red);
-	cnbi::draw::Circle		circle(circle_radius, dtk_green);
-	cnbi::draw::Ring		ring(ring_radius, ring_thick, dtk_blue);
-	cnbi::draw::Cross	    cross(cross_size, cross_thick, dtk_white);
-	cnbi::draw::Arrow	    arrow(arrow_width, arrow_height, dtk_cyan);
-
 	printf("[test_shapes] - Create rectangle (width=%f, height=%f)\n", rect_width, rect_height);
-	rectangle.Create();
+	cnbi::draw::Rectangle   rectangle(rect_width, rect_height, dtk_red);
 	
 	printf("[test_shapes] - Create circle (radius=%f)\n", circle_radius);
-	circle.Create();
+	cnbi::draw::Circle		circle(circle_radius, dtk_green);
 	
 	printf("[test_shapes] - Create circular ring (radius=%f, thick=%f)\n", ring_radius, ring_thick);
-	ring.Create();
+	cnbi::draw::Ring		ring(ring_radius, ring_thick, dtk_blue);
 	
 	printf("[test_shapes] - Create cross (size=%f, thick=%f)\n", cross_size, cross_thick);
-	cross.Create();
+	cnbi::draw::Cross	    cross(cross_size, cross_thick, dtk_white);
 	
 	printf("[test_shapes] - Create arrow (width=%f, height=%f)\n", arrow_width, arrow_height);
-	arrow.Create();
-	
+	cnbi::draw::Arrow	    arrow(arrow_width, arrow_height, dtk_cyan);
+
 	printf("[test_shapes] - Add shapes to the engine\n");	
 	if(engine.Add("rectangle", &rectangle) == false) 
 		fprintf(stderr, "[test_shapes] - Cannot add shape 'rectangle'\n");
@@ -87,6 +81,18 @@ int main(int argc, char** argv) {
 	printf("[test_shapes] - Raise cross to Top:\n");
 	engine.RaiseTop("cross");
 	engine.Dump();
+    CcTime::Sleep(2000);
+	
+	printf("[test_shapes] - Set stroke for rectangle:\n");
+	rectangle.SetStroke(0.05f, dtk_white);
+    CcTime::Sleep(2000);
+	
+	printf("[test_shapes] - Hide stroke for rectangle:\n");
+	rectangle.Hide(cnbi::draw::Shape::Stroke);
+    CcTime::Sleep(2000);
+	
+	printf("[test_shapes] - Show stroke for rectangle:\n");
+	rectangle.Show(cnbi::draw::Shape::Stroke);
     CcTime::Sleep(2000);
 	
 	printf("[test_shapes] - Start movement tests\n");

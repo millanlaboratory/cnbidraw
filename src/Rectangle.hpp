@@ -17,20 +17,16 @@ class Rectangle : public Shape {
 		 * \param	width	Rectangle's width
 		 * \param	height	Rectangle's height
 		 * \param	color	Rectangle's color
-		 * \param	filled	1 if the arrow is filled, 0 otherwise
 		 */
-		Rectangle(float width, float height, const float* color,
-				  int filled = CNBIDRAW_SHAPE_DEFAULT_FILLED);
+		Rectangle(float width, float height, const float* color);
 		
 		/*! \brief Destructor
 		 */
 		virtual ~Rectangle(void);
 
-		/*! \brief Creation method
-		 * It actually creates the shape by using dtk_create_shape
-		 * functionalities.
-		 */
-		virtual void Create(void);
+	protected:
+		virtual void CreateFill(void);
+		virtual void CreateStroke(void);
 };
 
 

@@ -31,28 +31,24 @@ int main(int argc, char** argv) {
 	if(string1.SetFont(&font1) == false) {
 		fprintf(stderr, "[test_strings] - Cannot set font1\n");
 		return EXIT_FAILURE;
+	} else {
+		printf("[test_strings] - Create string1 (size=%f)\n", string1_size);
 	}
 	
 	if(string2.SetFont(&font2) == false) {
 		fprintf(stderr, "[test_strings] - Cannot set font2\n");
 		return EXIT_FAILURE;
+	} else {
+		printf("[test_strings] - Create string2 (size=%f)\n", string2_size);
 	}
 
 	if(string3.SetFont(&font3) == false) {
 		fprintf(stderr, "[test_strings] - Cannot set font3\n");
 		return EXIT_FAILURE;
+	} else {
+		printf("[test_strings] - Create string3 (size=%f)\n", string3_size);
 	}
 
-
-	printf("[test_strings] - Create string1 (size=%f)\n", string1_size);
-	string1.Create();
-	
-	printf("[test_strings] - Create string2 (size=%f)\n", string2_size);
-	string2.Create();
-	
-	printf("[test_strings] - Create string3 (size=%f)\n", string3_size);
-	string3.Create();
-	
 	printf("[test_strings] - Add strings to the engine\n");	
 	if(engine.Add("string1", &string1) == false) 
 		fprintf(stderr, "[test_strings] - Cannot add string 'string1'\n");

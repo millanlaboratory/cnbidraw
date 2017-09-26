@@ -9,29 +9,36 @@ namespace cnbi {
 String::String(const std::string& text, float size, const float* color) {
 	this->height_	= 0.0;
 	this->width_  	= 0.0f;
-	this->filled_	= 1;	
-	this->color_[0] = color[0];
-	this->color_[1] = color[1];
-	this->color_[2] = color[2];
-	this->color_[3] = color[3];
+
+	/**** String initialization ****/
 	this->text_     = text;
 	this->size_		= size;
 	this->align_	= CNBIDRAW_STRING_DEFAULT_ALIGN;
 	this->font_		= nullptr;
+	
+	/**** Fill initialization ****/
+	this->fill_color_[0] = color[0];
+	this->fill_color_[1] = color[1];
+	this->fill_color_[2] = color[2];
+	this->fill_color_[3] = color[3];
 }
 
 String::String(float size, const float* color) {
 	this->height_	= 0.0;
 	this->width_  	= 0.0f;
-	this->filled_	= 1;	
-	this->color_[0] = color[0];
-	this->color_[1] = color[1];
-	this->color_[2] = color[2];
-	this->color_[3] = color[3];
+	
+	/**** String initialization ****/
 	this->text_     = "";
 	this->size_		= size;
 	this->align_	= CNBIDRAW_STRING_DEFAULT_ALIGN;
 	this->font_		= nullptr;
+	
+	/**** Fill initialization ****/
+	this->fill_color_[0] = color[0];
+	this->fill_color_[1] = color[1];
+	this->fill_color_[2] = color[2];
+	this->fill_color_[3] = color[3];
+
 }
 
 
@@ -46,8 +53,11 @@ bool String::SetFont(Font* font) {
 	if(this->font_ == nullptr) 
 		retcod = false;
 
-	if(this->shp_ptr_ != nullptr)
-		this->Create();
+	// Create fill shape
+	this->CreateFill();
+
+	// Create shape
+	this->Create();
 
 	return retcod;
 }
@@ -57,8 +67,11 @@ void String::SetText(const std::string& text) {
 	this->text_ = text;
 	this->shp_sem_.Post();
 	
-	if(this->shp_ptr_ != nullptr)
-		this->Create();
+	// Create fill shape
+	this->CreateFill();
+
+	// Create shape
+	this->Create();
 }
 
 void String::SetAlign(unsigned int align) {
@@ -66,8 +79,11 @@ void String::SetAlign(unsigned int align) {
 	this->align_ = align;
 	this->shp_sem_.Post();
 
-	if(this->shp_ptr_ != nullptr)
-		this->Create();
+	// Create fill shape
+	this->CreateFill();
+
+	// Create shape
+	this->Create();
 }
 
 void String::SetSize(float size) {
@@ -75,22 +91,31 @@ void String::SetSize(float size) {
 	this->size_ = size;
 	this->shp_sem_.Post();
 	
-	if(this->shp_ptr_ != nullptr)
-		this->Create();
+	// Create fill shape
+	this->CreateFill();
+
+	// Create shape
+	this->Create();
 }
 
-void String::Create(void) {
+void String::CreateFill(void) {
 
 	this->shp_sem_.Wait();
 	if(this->font_ != nullptr) {
-		this->shp_ptr_ = dtk_create_string(this->shp_ptr_, 
+		this->fill_ptr_ = dtk_create_string(this->fill_ptr_, 
 										   this->text_.c_str(), this->size_,
 										   this->orig_x_, this->orig_y_, 
-										   this->align_, this->color_, 
+										   this->align_, this->fill_color_, 
 										   this->font_->font_);
 	}
 	this->shp_sem_.Post();
 
+}
+
+void String::CreateStroke(void) {
+	this->shp_sem_.Wait();
+	this->strk_ptr_ = nullptr;
+	this->shp_sem_.Post();
 }
 
 	}

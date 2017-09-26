@@ -25,17 +25,14 @@ class Ring : public Circle {
 		/*! \brief Destructor
 		 */
 		virtual ~Ring(void);
-
-		/*! \brief Creation method
-		 * It actually creates the shape by using dtk_create_shape
-		 * functionalities.
-		 */
-		virtual void Create(void);
 		
 		/*! \brief Get ring's thickness
 		 * \return	Thickness of the ring
 		 */
 		float GetThick(void);
+
+	protected:
+		virtual void CreateFill(void);
 
 	protected:
 		float 		 thick_;

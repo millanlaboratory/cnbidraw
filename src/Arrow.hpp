@@ -25,19 +25,12 @@ class Arrow : public Shape {
 		 */
 		Arrow(float width, float height, const float* color,
 		      float thick = CNBIDRAW_ARROW_DEFAULT_THICK, 
-		      float squeeze = CNBIDRAW_ARROW_DEFAULT_SQUEEZE, 
-		      int filled = CNBIDRAW_SHAPE_DEFAULT_FILLED);
+		      float squeeze = CNBIDRAW_ARROW_DEFAULT_SQUEEZE);
 
 		/*! \brief Destructor
 		 */
 		virtual ~Arrow(void);
 	
-		/*! \brief Creation method
-		 * It actually creates the shape by using dtk_create_shape
-		 * functionalities.
-		 */
-		virtual void Create(void);
-
 		/*! \brief Get the arrow thickness
 		 * \return	Arrow's thickness
 		 */
@@ -47,15 +40,14 @@ class Arrow : public Shape {
 		 * \return	Arrow's squeeze
 		 */
 		float GetSqueeze(void);
+	
+	protected:
+		virtual void CreateFill(void);
 
 	private:
-	    float	    thick_;
-	    float	    squeeze_;
-	    unsigned int    nvert_;
-	    unsigned int    nind_;
-	    float*	    vertpos_;
-	    float*	    vertcol_;
-	    unsigned int*   indices_;
+	    float			thick_;
+	    float			squeeze_;
+
 };
     }
 }

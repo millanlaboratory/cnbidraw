@@ -67,15 +67,26 @@ int main(int argc, char** argv) {
 	gallery->Select();
 	CcTime::Sleep(1000.0f);
 
+	printf("[test_gallery] - Set stroke for picture (and hide it)\n");
+	gallery->SetStroke(0.05f, dtk_green);
+	gallery->Hide(cnbi::draw::Image::Stroke);
+
 	printf("[test_gallery] - Starting picture show from the beginning:\n");
 	gallery->GoTo(gallery->Begin());
 	while(quit == false) {
 		if(gallery->Current() == gallery->End()) 
 			gallery->Rewind();
+		
 		printf("[test_gallery] - Current picture: %s\n", (*gallery->Current()).c_str());
 		gallery->Select();
-		gallery->Next();
 		CcTime::Sleep(1000.0f);
+
+		printf("[test_gallery] - Highlight current picture\n");
+		gallery->Show(cnbi::draw::Image::Stroke);
+		CcTime::Sleep(1000.0f);
+
+		gallery->Hide(cnbi::draw::Image::Stroke);
+		gallery->Next();
 	}
 
 	delete engine;

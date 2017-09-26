@@ -6,26 +6,33 @@
 namespace cnbi {
 	namespace draw {
 
-Circle::Circle(float radius, const float* color, int filled, unsigned int npoints) {
-
-	this->shp_sem_.Wait();
+Circle::Circle(float radius, const float* color, unsigned int npoints) {
 	this->radius_   = radius;
-	this->filled_   = filled;	
-	this->color_[0] = color[0];
-	this->color_[1] = color[1];
-	this->color_[2] = color[2];
-	this->color_[3] = color[3];
 	this->npoints_  = npoints;
-	this->shp_sem_.Post();
+	
+	/**** Fill initialization ****/
+	this->fill_color_[0] = color[0];
+	this->fill_color_[1] = color[1];
+	this->fill_color_[2] = color[2];
+	this->fill_color_[3] = color[3];
+
+	// Create fill shape
+	this->CreateFill();
+
+	// Create stroke shape (no stroke for the moment)
+	this->CreateStroke();
+
+	// Create shape
+	this->Create();
 }
 
 Circle::~Circle(void){};
 
-void Circle::Create(void) {
+void Circle::CreateFill(void) {
 	this->shp_sem_.Wait();
-	this->shp_ptr_ = dtk_create_circle(this->shp_ptr_, this->orig_x_,
+	this->fill_ptr_ = dtk_create_circle(this->fill_ptr_, this->orig_x_,
 			   						   this->orig_y_, this->radius_, 
-									   this->filled_, this->color_, 
+									   1, this->fill_color_, 
 									   this->npoints_);
 	this->shp_sem_.Post();
 }

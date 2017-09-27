@@ -59,12 +59,6 @@ Arrow::Arrow(float width, float height, const float* color,
     this->fill_indices_[5] = 3;
     this->fill_indices_[6] = 4;
 
-	// Create fill shape
-	this->CreateFill();
-
-	// Create stroke shape (no stroke for the moment)
-	this->CreateStroke();
-
 	// Create shape
 	this->Create();
 }
@@ -83,6 +77,9 @@ void Arrow::CreateFill(void) {
 					      this->fill_nind_, this->fill_indices_, 
 					      DTK_TRIANGLE_STRIP, NULL);
     this->shp_sem_.Post();	
+}
+
+void Arrow::CreateStroke(void) {
 }
 
 float Arrow::GetThick(void) {

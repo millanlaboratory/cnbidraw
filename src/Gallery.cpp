@@ -39,6 +39,8 @@ bool Gallery::SetFolder(const std::string& folder, const std::vector<std::string
 	this->folder_  = folder;
 	this->PostShape();
 
+	this->Select();
+
 	return true;
 }
 
@@ -106,8 +108,11 @@ bool Gallery::Select(GalleryIt it) {
 	filepath = this->folder_ + "/" + (*it);
 	result = this->Set(filepath, 6);
 	
-	if(result == true)
+	if(result == true) {
+		this->CreateFill();
+		this->CreateStroke();
 		this->Create();
+	}
 	return result;
 }
 

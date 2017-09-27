@@ -33,6 +33,7 @@ class Ring : public Circle {
 
 	protected:
 		virtual void CreateFill(void);
+		virtual void CreateStroke(void);
 
 	protected:
 		float 		 thick_;

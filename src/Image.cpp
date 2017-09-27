@@ -20,6 +20,7 @@ Image::Image(float width, float height, const float* color) {
 	this->fill_color_[2] = color[2];
 	this->fill_color_[3] = color[3];
 
+	this->Create();
 }
 
 Image::~Image(void) {
@@ -43,12 +44,6 @@ bool Image::Set(const std::string& filename, unsigned int mxlvl) {
 		retcod = true;
 
 	this->shp_sem_.Post();
-
-	// Create fill shape
-	this->CreateFill();
-	
-	// Create fill shape
-	this->CreateStroke();
 
 	// Create shape
 	this->Create();

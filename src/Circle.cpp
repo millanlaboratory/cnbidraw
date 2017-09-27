@@ -16,12 +16,6 @@ Circle::Circle(float radius, const float* color, unsigned int npoints) {
 	this->fill_color_[2] = color[2];
 	this->fill_color_[3] = color[3];
 
-	// Create fill shape
-	this->CreateFill();
-
-	// Create stroke shape (no stroke for the moment)
-	this->CreateStroke();
-
 	// Create shape
 	this->Create();
 }
@@ -35,6 +29,9 @@ void Circle::CreateFill(void) {
 									   1, this->fill_color_, 
 									   this->npoints_);
 	this->shp_sem_.Post();
+}
+
+void Circle::CreateStroke(void) {
 }
 
 unsigned int Circle::GetNumPoints(void) {

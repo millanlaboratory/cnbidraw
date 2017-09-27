@@ -43,6 +43,7 @@ class Arrow : public Shape {
 	
 	protected:
 		virtual void CreateFill(void);
+		virtual void CreateStroke(void);
 
 	private:
 	    float			thick_;

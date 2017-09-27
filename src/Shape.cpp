@@ -53,16 +53,13 @@ void Shape::Destroy(void) {
 	this->shp_sem_.Post();
 }
 
-void Shape::CreateStroke(void) {
-	this->shp_sem_.Wait();
-	this->strk_ptr_ = nullptr;
-	this->shp_sem_.Post();
-}
-
 void Shape::Create(void) {
 	
 	dtk_hshape* shps;
 	unsigned int nshps = 0;
+
+	this->CreateFill();
+	this->CreateStroke();
 
 	this->shp_sem_.Wait();
 	if(this->strk_ptr_ != nullptr && this->fill_ptr_ != nullptr) {
@@ -74,6 +71,10 @@ void Shape::Create(void) {
 		nshps = 1;
 		shps = new dtk_hshape[nshps*sizeof(dtk_hshape)];
 		shps[0] = this->fill_ptr_;
+	} else if(this->strk_ptr_ != nullptr && this->fill_ptr_ == nullptr) {
+		nshps = 1;
+		shps = new dtk_hshape[nshps*sizeof(dtk_hshape)];
+		shps[0] = this->strk_ptr_;
 	}
 
 	if(nshps > 0) {
@@ -93,7 +94,6 @@ void Shape::SetStroke(float thick, const float* color) {
 	this->strk_color_[3] = color[3];
 	this->shp_sem_.Post();
 
-	this->CreateStroke();
 	this->Create();
 }
 
@@ -115,31 +115,39 @@ float Shape::GetWidth(void) {
 
 void Shape::Move(float x, float y) {
 	this->shp_sem_.Wait();
-	dtk_move_shape(this->shp_ptr_, x, y);
-	this->curr_x_ = x;
-	this->curr_y_ = y;
+	if(this->shp_ptr_ != nullptr) {
+		dtk_move_shape(this->shp_ptr_, x, y);
+		this->curr_x_ = x;
+		this->curr_y_ = y;
+	}
 	this->shp_sem_.Post();
 }
 
 void Shape::RelMove(float dx, float dy) {
 	this->shp_sem_.Wait();
-	dtk_relmove_shape(this->shp_ptr_, dx, dy);
-	this->curr_x_ = this->curr_x_ + dx;
-	this->curr_y_ = this->curr_y_ + dy;
+	if(this->shp_ptr_ != nullptr) {
+		dtk_relmove_shape(this->shp_ptr_, dx, dy);
+		this->curr_x_ = this->curr_x_ + dx;
+		this->curr_y_ = this->curr_y_ + dy;
+	}
 	this->shp_sem_.Post();
 }
 
 void Shape::Rotate(float deg) {
 	this->shp_sem_.Wait();
-	dtk_rotate_shape(this->shp_ptr_, deg);
-	this->curr_z_ = deg;
+	if(this->shp_ptr_ != nullptr) {
+		dtk_rotate_shape(this->shp_ptr_, deg);
+		this->curr_z_ = deg;
+	}
 	this->shp_sem_.Post();
 }
 
 void Shape::RelRotate(float ddeg) {
 	this->shp_sem_.Wait();
-	dtk_relrotate_shape(this->shp_ptr_, ddeg);
-	this->curr_z_ = this->curr_z_ + ddeg;
+	if(this->shp_ptr_ != nullptr) {
+		dtk_relrotate_shape(this->shp_ptr_, ddeg);
+		this->curr_z_ = this->curr_z_ + ddeg;
+	}
 	this->shp_sem_.Post();
 }
 
@@ -163,6 +171,8 @@ void Shape::SetAlpha(float alpha, unsigned int element) {
 	}
 
 	this->shp_sem_.Post();
+	
+	this->Create();
 }
 
 void Shape::set_alpha_stroke(float alpha) {
@@ -198,8 +208,8 @@ void Shape::set_color_fill(const float*& color) {
 }
 
 void Shape::SetColor(const float* color, unsigned int element) {
-	this->shp_sem_.Wait();
 
+	this->shp_sem_.Wait();
 	switch(element) {
 		case Shape::Stroke:
 			this->set_color_stroke(color);
@@ -214,8 +224,9 @@ void Shape::SetColor(const float* color, unsigned int element) {
 		default:
 			break;
 	}
-
 	this->shp_sem_.Post();
+
+	this->Create();
 }
 
 void Shape::Hide(unsigned int element) {

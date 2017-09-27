@@ -33,6 +33,7 @@ class Circle : public Shape {
 
 	protected:
 		virtual void CreateFill(void);
+		virtual void CreateStroke(void);
 
 	protected:
 		float 		 radius_;

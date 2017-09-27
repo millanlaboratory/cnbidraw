@@ -53,9 +53,6 @@ bool String::SetFont(Font* font) {
 	if(this->font_ == nullptr) 
 		retcod = false;
 
-	// Create fill shape
-	this->CreateFill();
-
 	// Create shape
 	this->Create();
 
@@ -67,9 +64,6 @@ void String::SetText(const std::string& text) {
 	this->text_ = text;
 	this->shp_sem_.Post();
 	
-	// Create fill shape
-	this->CreateFill();
-
 	// Create shape
 	this->Create();
 }
@@ -78,9 +72,6 @@ void String::SetAlign(unsigned int align) {
 	this->shp_sem_.Wait();
 	this->align_ = align;
 	this->shp_sem_.Post();
-
-	// Create fill shape
-	this->CreateFill();
 
 	// Create shape
 	this->Create();
@@ -91,9 +82,6 @@ void String::SetSize(float size) {
 	this->size_ = size;
 	this->shp_sem_.Post();
 	
-	// Create fill shape
-	this->CreateFill();
-
 	// Create shape
 	this->Create();
 }
@@ -113,9 +101,6 @@ void String::CreateFill(void) {
 }
 
 void String::CreateStroke(void) {
-	this->shp_sem_.Wait();
-	this->strk_ptr_ = nullptr;
-	this->shp_sem_.Post();
 }
 
 	}

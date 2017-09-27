@@ -32,7 +32,7 @@ class Shape {
 		 */
 		virtual void CreateFill(void) = 0;
 
-		virtual void CreateStroke(void);
+		virtual void CreateStroke(void) = 0;
 
 		virtual void Create(void);
 
@@ -167,7 +167,7 @@ class Shape {
 		static const unsigned int Whole  = 3;
 
 
-	protected:
+	public:
 		dtk_hshape 	shp_ptr_;
 		dtk_hshape 	strk_ptr_;
 		dtk_hshape 	fill_ptr_;

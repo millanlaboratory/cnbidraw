@@ -54,9 +54,22 @@ int main(int argc, char** argv) {
 	image2.Hide(cnbi::draw::Shape::Stroke);
 	CcTime::Sleep(2000.0f);
 	
+	printf("[test_images] - Hide image2\n");
+	image2.Hide();
+	CcTime::Sleep(2000.0f);
+	
+	printf("[test_images] - Show image2\n");
+	image2.Show();
+	CcTime::Sleep(2000.0f);
+	
+	printf("[test_images] - Hide border to image2\n");
+	image2.Hide(cnbi::draw::Shape::Stroke);
+	CcTime::Sleep(2000.0f);
+	
 	printf("[test_images] - Show border to image2\n");
 	image2.Show(cnbi::draw::Shape::Stroke);
 	CcTime::Sleep(2000.0f);
+	
 
 	printf("[test_images] - Start image tests\n");
 	CcTimeValue tic;

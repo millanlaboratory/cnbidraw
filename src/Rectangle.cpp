@@ -16,9 +16,6 @@ Rectangle::Rectangle(float width, float height, const float* color) {
 	this->fill_color_[2] = color[2];
 	this->fill_color_[3] = color[3];
 
-	// Create fill shape
-	this->CreateFill();
-
 	// Create shape
 	this->Create();
 }

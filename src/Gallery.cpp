@@ -9,13 +9,13 @@ namespace cnbi {
 Gallery::Gallery(float width, float height) : Image(width, height) {}
 
 
-Gallery::~Gallery(void) {}
+Gallery::~Gallery(void) {
+}
 
 
 bool Gallery::SetFolder(const std::string& folder, const std::vector<std::string> exts) {
 
 
-	this->WaitShape();
 
 	DIR* dir = opendir(folder.c_str());
 
@@ -23,6 +23,7 @@ bool Gallery::SetFolder(const std::string& folder, const std::vector<std::string
 		return false;
 	}
 
+	this->WaitShape();
 	dirent* entry;
 	while((entry = readdir(dir)) != nullptr) {
 		for(auto it=exts.begin(); it!=exts.end(); ++it) {

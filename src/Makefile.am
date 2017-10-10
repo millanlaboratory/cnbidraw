@@ -1,4 +1,4 @@
-AM_CXXFLAGS = -std=c++11 -I/usr/include/eigen3
+AM_CXXFLAGS = -std=c++11 
 
 lib_LTLIBRARIES = libcnbidraw.la
 

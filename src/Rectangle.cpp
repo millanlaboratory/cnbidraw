@@ -6,7 +6,7 @@
 namespace cnbi {
 	namespace draw {
 
-Rectangle::Rectangle(float width, float height, const float* color) {
+Rectangle::Rectangle(float width, float height, const float* color) : Shape() {
 	this->height_ = height;
 	this->width_  = width;
 

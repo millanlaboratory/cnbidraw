@@ -6,7 +6,7 @@
 namespace cnbi {
 	namespace draw {
 
-String::String(const std::string& text, float size, const float* color) {
+String::String(const std::string& text, float size, const float* color) : Shape() {
 	this->height_	= 0.0;
 	this->width_  	= 0.0f;
 
@@ -101,6 +101,9 @@ void String::CreateFill(void) {
 }
 
 void String::CreateStroke(void) {
+	this->shp_sem_.Wait();
+	this->strk_ptr_ = nullptr;
+	this->shp_sem_.Post();
 }
 
 	}

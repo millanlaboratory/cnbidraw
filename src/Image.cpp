@@ -7,7 +7,7 @@
 namespace cnbi {
 	namespace draw {
 
-Image::Image(float width, float height, const float* color) {
+Image::Image(float width, float height, const float* color) : Shape() {
 	this->height_ = height;
 	this->width_  = width;
 

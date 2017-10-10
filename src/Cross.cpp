@@ -6,7 +6,7 @@
 namespace cnbi {
 	namespace draw {
 
-Cross::Cross(float size, float thick, const float* color) {
+Cross::Cross(float size, float thick, const float* color) : Shape() {
 	this->height_ = size;
 	this->width_  = size;
 	this->thick_  = thick;
@@ -43,6 +43,9 @@ void Cross::CreateFill(void) {
 }
 
 void Cross::CreateStroke(void) {
+	this->shp_sem_.Wait();
+	this->strk_ptr_ = nullptr;
+	this->shp_sem_.Post();
 }
 
 float Cross::GetThick(void) {

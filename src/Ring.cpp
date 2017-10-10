@@ -35,6 +35,9 @@ void Ring::CreateFill(void) {
 }
 
 void Ring::CreateStroke(void) {
+	this->shp_sem_.Wait();
+	this->strk_ptr_ = nullptr;
+	this->shp_sem_.Post();
 }
 
 float Ring::GetThick(void) {

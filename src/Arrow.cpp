@@ -7,7 +7,7 @@ namespace cnbi {
     namespace draw {
 
 Arrow::Arrow(float width, float height, const float* color, 
-	     float thick, float squeeze) {
+	     float thick, float squeeze) : Shape() {
     this->height_   = height;
     this->width_    = width;
     this->thick_    = thick;
@@ -80,6 +80,9 @@ void Arrow::CreateFill(void) {
 }
 
 void Arrow::CreateStroke(void) {
+	this->shp_sem_.Wait();
+	this->strk_ptr_ = nullptr;
+	this->shp_sem_.Post();
 }
 
 float Arrow::GetThick(void) {

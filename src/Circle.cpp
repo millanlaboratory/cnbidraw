@@ -6,7 +6,7 @@
 namespace cnbi {
 	namespace draw {
 
-Circle::Circle(float radius, const float* color, unsigned int npoints) {
+Circle::Circle(float radius, const float* color, unsigned int npoints) : Shape() {
 	this->radius_   = radius;
 	this->npoints_  = npoints;
 	
@@ -32,6 +32,9 @@ void Circle::CreateFill(void) {
 }
 
 void Circle::CreateStroke(void) {
+	this->shp_sem_.Wait();
+	this->strk_ptr_ = nullptr;
+	this->shp_sem_.Post();
 }
 
 unsigned int Circle::GetNumPoints(void) {

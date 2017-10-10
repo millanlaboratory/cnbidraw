@@ -172,7 +172,7 @@ void Shape::SetAlpha(float alpha, unsigned int element) {
 
 	this->shp_sem_.Post();
 	
-	this->Create();
+	//this->Create();
 }
 
 void Shape::set_alpha_stroke(float alpha) {
@@ -226,7 +226,7 @@ void Shape::SetColor(const float* color, unsigned int element) {
 	}
 	this->shp_sem_.Post();
 
-	this->Create();
+	//this->Create();
 }
 
 void Shape::Hide(unsigned int element) {

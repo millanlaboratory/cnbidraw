@@ -1,9 +1,12 @@
+#include <cmath>
+
 #include "Engine.hpp"
 #include "Rectangle.hpp"
 #include "Circle.hpp"
 #include "Ring.hpp"
 #include "Cross.hpp"
 #include "Arrow.hpp"
+#include "Arc.hpp"
 
 
 int main(int argc, char** argv) {
@@ -13,6 +16,7 @@ int main(int argc, char** argv) {
 	float ring_radius, ring_thick;
 	float cross_size, cross_thick;
 	float arrow_width, arrow_height;
+	float arc_radius, arc_thick, arc_length;
 
 	rect_width    = 0.7f;
 	rect_height   = 0.3f;
@@ -23,6 +27,9 @@ int main(int argc, char** argv) {
 	cross_thick   = 0.05f;
 	arrow_width	  = 0.4;
 	arrow_height  = 0.3;
+	arc_radius    = 0.3f;
+	arc_thick	  = 0.05f;
+	arc_length    = M_PI/2.0f;
 
 	cnbi::draw::Engine 	engine;
 
@@ -40,6 +47,9 @@ int main(int argc, char** argv) {
 	
 	printf("[test_shapes] - Create arrow (width=%f, height=%f)\n", arrow_width, arrow_height);
 	cnbi::draw::Arrow	    arrow(arrow_width, arrow_height, dtk_cyan);
+	
+	printf("[test_shapes] - Create arc (radius=%f, length=%f, thick=%f)\n", arc_radius, arc_length, arc_thick);
+	cnbi::draw::Arc			arc(arc_radius, arc_length, arc_thick, dtk_red);
 
 	printf("[test_shapes] - Add shapes to the engine\n");	
 	if(engine.Add("rectangle", &rectangle) == false) 
@@ -52,6 +62,8 @@ int main(int argc, char** argv) {
 		fprintf(stderr, "[test_shapes] - Cannot add shape 'cross'\n");
 	if(engine.Add("arrow", &arrow) == false)
 		fprintf(stderr, "[test_shapes] - Cannot add shape 'arrow'\n");
+	if(engine.Add("arc", &arc) == false)
+		fprintf(stderr, "[test_shapes] - Cannot add shape 'arc'\n");
 
 	printf("[test_shapes] - Start the engine and dumping:\n");
 	engine.Dump();
@@ -106,6 +118,7 @@ int main(int argc, char** argv) {
 		cross.RelRotate(5.0f);
 		cross.RelMove(-0.01f, 0.0f);
 		arrow.RelRotate(-1.0f);
+		arc.RelRotate(-1.0f);
 
 		if((int)(CcTime::Toc(&tic)/1000) % 2 == 0) {
 			ring.Show();

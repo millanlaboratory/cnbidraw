@@ -20,6 +20,6 @@ test_events_LDADD = -lcnbicore -ldrawtk $(top_builddir)/src/libcnbidraw.la
 test_gallery_SOURCES = test_gallery.cpp
 test_gallery_LDADD = -lcnbicore -ldrawtk $(top_builddir)/src/libcnbidraw.la 
 
-#TESTS = test_engine test_shapes test_images test_strings test_events
+TESTS = test_engine test_shapes test_images test_strings test_events
 
 

@@ -16,6 +16,7 @@ libcnbidraw_include_HEADERS = Flags.hpp \
 						 	  Cross.hpp \
 						 	  Rectangle.hpp \
 						 	  Ring.hpp \
+							  Arc.hpp \
 							  Image.hpp \
 							  String.hpp \
 							  Font.hpp \
@@ -46,6 +47,8 @@ libcnbidraw_la_SOURCES = Flags.hpp \
 						 Rectangle.cpp \
 						 Ring.hpp \
 						 Ring.cpp \
+						 Arc.hpp \
+						 Arc.cpp \
 						 Image.hpp \
 						 Image.cpp \
 						 String.hpp \

@@ -6,9 +6,9 @@
 namespace cnbi {
 	namespace draw {
 
-Rectangle::Rectangle(float width, float height, const float* color) : Shape() {
-	this->height_ = height;
+Rectangle::Rectangle(float height, float width, const float* color) : Shape() {
 	this->width_  = width;
+	this->height_ = height;
 
 	/**** Fill initialization ****/
 	this->fill_color_[0] = color[0];
@@ -25,7 +25,7 @@ Rectangle::~Rectangle(void) {}
 void Rectangle::CreateFill(void) {
 	this->shp_sem_.Wait();	
 	this->fill_ptr_ = dtk_create_rectangle_hw(this->fill_ptr_, this->orig_x_, this->orig_y_, 
-			   								 this->width_, this->height_, 1,
+			   								 this->height_, this->width_, 1,
 											 this->fill_color_);
 	this->shp_sem_.Post();	
 }

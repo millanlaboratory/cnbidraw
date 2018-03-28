@@ -31,11 +31,11 @@ void Cross::CreateFill(void) {
 	dtk_hshape shps[] = {
 		this->hrect_shp_ = dtk_create_rectangle_hw(this->hrect_shp_, 
 								this->orig_x_, this->orig_y_, 
-								this->width_, this->thick_, 1,
+								this->thick_, this->width_, 1,
 								this->fill_color_), 
 		this->vrect_shp_ = dtk_create_rectangle_hw(this->vrect_shp_, 
 								this->orig_x_, this->orig_y_, 
-			   					this->thick_, this->height_, 1,
+			   					this->height_, this->thick_, 1,
 								this->fill_color_)
 	};
 	this->fill_ptr_ = dtk_create_composite_shape(this->fill_ptr_, sizeof(shps)/sizeof(shps[0]), shps, 1);

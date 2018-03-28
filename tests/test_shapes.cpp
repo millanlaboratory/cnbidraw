@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
 	cnbi::draw::Engine 	engine;
 
 	printf("[test_shapes] - Create rectangle (width=%f, height=%f)\n", rect_width, rect_height);
-	cnbi::draw::Rectangle   rectangle(rect_width, rect_height, dtk_red);
+	cnbi::draw::Rectangle   rectangle(rect_height, rect_width, dtk_red);
 	
 	printf("[test_shapes] - Create circle (radius=%f)\n", circle_radius);
 	cnbi::draw::Circle		circle(circle_radius, dtk_green);

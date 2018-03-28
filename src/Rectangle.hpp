@@ -18,7 +18,7 @@ class Rectangle : public Shape {
 		 * \param	height	Rectangle's height
 		 * \param	color	Rectangle's color
 		 */
-		Rectangle(float width, float height, const float* color);
+		Rectangle(float height, float width, const float* color);
 		
 		/*! \brief Destructor
 		 */

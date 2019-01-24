@@ -5,7 +5,8 @@
 #include <string.h>
 #include <drawtk.h>
 #include <dtk_event.h>
-#include <cnbicore/CcSemaphore.hpp>
+#include <mutex>
+//#include <cnbicore/CcSemaphore.hpp>
 
 #include "Flags.hpp"
 
@@ -182,11 +183,11 @@ class Window {
 
 		/*! \brief Window's lock
 		 */
-		void WaitWindow(void);
+		//void WaitWindow(void);
 		
 		/*! \brief Window's unlock
 		 */
-		void PostWindow(void);
+		//void PostWindow(void);
     
     private:
 		dtk_hwnd		win_ptr_;
@@ -197,7 +198,8 @@ class Window {
 		unsigned int	win_y_;
 		unsigned int	win_bpp_;
     	
-    	CcSemaphore		win_sem_;
+    	//CcSemaphore		win_sem_;
+		std::mutex		win_mutex_;
 };
 
 	}

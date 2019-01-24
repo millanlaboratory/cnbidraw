@@ -45,7 +45,8 @@ Arc::~Arc(void) {};
 
 void Arc::CreateFill(void) {
 	
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 
 	this->fill_ptr_ = dtk_create_complex_shape(this->fill_ptr_,
 					      this->fill_nvert_, this->fill_vertpos_,
@@ -53,14 +54,15 @@ void Arc::CreateFill(void) {
 					      this->fill_nind_, this->fill_indices_, 
 					      DTK_TRIANGLE_STRIP, NULL);
 
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 }
 
 float Arc::GetLength(void) {
 	float length;
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	length = this->length_;
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 	return length;
 }
 	}

@@ -29,23 +29,26 @@ void Engine::Open(void) {
 }
 
 void Engine::Close(void) {
-    this->eng_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->eng_mutex_);
+    //this->eng_sem_.Wait();
     if(this->IsRunning())
 		this->Stop();
-    this->eng_sem_.Post();
+    //this->eng_sem_.Post();
 }
 
 void Engine::SetRefresh(float refresh) {
-    this->eng_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->eng_mutex_);
+    //this->eng_sem_.Wait();
     this->refresh_ = refresh;
-    this->eng_sem_.Post();
+    //this->eng_sem_.Post();
 }
 
 float Engine::GetRefresh(void) {
     float refresh;
-    this->eng_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->eng_mutex_);
+    //this->eng_sem_.Wait();
     refresh = this->refresh_;
-    this->eng_sem_.Post();
+    //this->eng_sem_.Post();
     return refresh;
 }
 
@@ -54,7 +57,8 @@ bool Engine::Add(const std::string& name, Shape* shp, bool overwrite) {
    
     bool retcod = true;	
     
-    this->shps_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shps_mutex_);
+    //this->shps_sem_.Wait();
     
     if(this->shps_.Exists(name) && overwrite == true)
 	retcod = this->shps_.Erase(name);
@@ -62,7 +66,7 @@ bool Engine::Add(const std::string& name, Shape* shp, bool overwrite) {
     if(retcod == true)
 	retcod = this->shps_.Emplace(name, shp);
     
-    this->shps_sem_.Post();
+    //this->shps_sem_.Post();
     
     return retcod;
 }
@@ -70,41 +74,46 @@ bool Engine::Add(const std::string& name, Shape* shp, bool overwrite) {
 bool Engine::Remove(const std::string& name) {
     bool retcod = false;	
     
-    this->shps_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shps_mutex_);
+    //this->shps_sem_.Wait();
     retcod = this->shps_.Erase(name);
-    this->shps_sem_.Post();
+    //this->shps_sem_.Post();
     return retcod;
 }
 
 bool Engine::Raise(const std::string& name) {
     bool retcod;
-    this->shps_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shps_mutex_);
+    //this->shps_sem_.Wait();
     retcod = this->shps_.Up(name);
-    this->shps_sem_.Post();
+    //this->shps_sem_.Post();
     return retcod;
 }
 
 bool Engine::Lower(const std::string& name) {
     bool retcod;
-    this->shps_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shps_mutex_);
+    //this->shps_sem_.Wait();
     retcod = this->shps_.Down(name);	
-    this->shps_sem_.Post();
+    //this->shps_sem_.Post();
     return retcod;
 }
 
 bool Engine::LowerBottom(const std::string& name) {
     bool retcod;
-    this->shps_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shps_mutex_);
+    //this->shps_sem_.Wait();
     retcod = this->shps_.Bottom(name);	
-    this->shps_sem_.Post();
+    //this->shps_sem_.Post();
     return retcod;
 }
 
 bool Engine::RaiseTop(const std::string& name) {
     bool retcod;
-    this->shps_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shps_mutex_);
+    //this->shps_sem_.Wait();
     retcod = this->shps_.Top(name);	
-    this->shps_sem_.Post();
+    //this->shps_sem_.Post();
     return retcod;
 }
 
@@ -131,7 +140,8 @@ void Engine::Main(void) {
 void Engine::Render(void) {
 	MShapeIt shpIt;
     
-	this->shps_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shps_mutex_);
+	//this->shps_sem_.Wait();
     for(auto ordIt = this->shps_.BeginOrder(); ordIt != this->shps_.EndOrder(); ++ordIt) {
 	
 		shpIt = this->shps_.FindShape(ordIt->second);	
@@ -141,7 +151,7 @@ void Engine::Render(void) {
 	
 		shpIt->second->Draw();
 	}
-	this->shps_sem_.Post();
+	//this->shps_sem_.Post();
 }
 
 void Engine::Refresh(void) {
@@ -150,9 +160,10 @@ void Engine::Refresh(void) {
 }
 
 void Engine::Dump(void) {
-	this->shps_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shps_mutex_);
+	//this->shps_sem_.Wait();
     this->shps_.Dump();
-	this->shps_sem_.Post();
+	//this->shps_sem_.Post();
 }
 
     }

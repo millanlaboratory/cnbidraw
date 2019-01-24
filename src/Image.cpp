@@ -24,16 +24,18 @@ Image::Image(float width, float height, const float* color) : Shape() {
 }
 
 Image::~Image(void) {
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	if(this->tex_ptr_ != nullptr)
 		dtk_destroy_texture(this->tex_ptr_);
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 }
 
 bool Image::Set(const std::string& filename, unsigned int mxlvl) {
 
 	bool retcod = false;
-	this->shp_sem_.Wait();
+	this->shp_mutex_.lock();
+	//this->shp_sem_.Wait();
 
 	if(this->tex_ptr_ != nullptr)
 		dtk_destroy_texture(this->tex_ptr_);
@@ -43,7 +45,8 @@ bool Image::Set(const std::string& filename, unsigned int mxlvl) {
 	if(this->tex_ptr_ != nullptr) 
 		retcod = true;
 
-	this->shp_sem_.Post();
+	this->shp_mutex_.unlock();
+	//this->shp_sem_.Post();
 
 	// Create shape
 	this->Create();
@@ -54,29 +57,32 @@ bool Image::Set(const std::string& filename, unsigned int mxlvl) {
 bool Image::GetSize(unsigned int* w_px, unsigned int* h_px) {
 	
 	bool retcod = false;
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	if(this->tex_ptr_ != nullptr) {
 		dtk_texture_getsize(this->tex_ptr_, w_px, h_px);
 		retcod = true;
 	}
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 	return retcod;
 }
 
 void Image::CreateFill(void) {
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	if(this->tex_ptr_ != nullptr) {
 		this->fill_ptr_ = dtk_create_image(this->fill_ptr_, 
 					  this->orig_x_, this->orig_y_,
 					  this->width_, this->height_, 
 					  this->fill_color_, this->tex_ptr_);
 	}
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 }
 
 void Image::CreateStroke(void) {
 
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	
     // Initialize vertex, colors and index arrays
 	this->strk_nvert_    = 8;
@@ -129,7 +135,7 @@ void Image::CreateStroke(void) {
 					      this->strk_vertcol_, NULL, 
 					      this->strk_nind_, this->strk_indices_, 
 					      DTK_TRIANGLE_STRIP, NULL);
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 }
 
 

@@ -27,7 +27,8 @@ Cross::Cross(float size, float thick, const float* color) : Shape() {
 Cross::~Cross(void) {}
 
 void Cross::CreateFill(void) {
-	this->shp_sem_.Wait();	
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();	
 	dtk_hshape shps[] = {
 		this->hrect_shp_ = dtk_create_rectangle_hw(this->hrect_shp_, 
 								this->orig_x_, this->orig_y_, 
@@ -39,20 +40,22 @@ void Cross::CreateFill(void) {
 								this->fill_color_)
 	};
 	this->fill_ptr_ = dtk_create_composite_shape(this->fill_ptr_, sizeof(shps)/sizeof(shps[0]), shps, 1);
-	this->shp_sem_.Post();	
+	//this->shp_sem_.Post();	
 }
 
 void Cross::CreateStroke(void) {
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	this->strk_ptr_ = nullptr;
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 }
 
 float Cross::GetThick(void) {
 	float thick;
-	this->shp_sem_.Wait();	
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();	
 	thick = this->thick_;
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 	return thick;
 }
 

@@ -7,7 +7,10 @@ namespace cnbi {
 	namespace draw {
 
 Shape::Shape(void){
-	this->shp_sem_.Wait();
+
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+
+	//this->shp_sem_.Wait();
 	this->shp_ptr_ = nullptr;
 	this->curr_x_  = 0.0f;
 	this->curr_y_  = 0.0f;
@@ -37,7 +40,7 @@ Shape::Shape(void){
 	this->strk_color_[1] = 0.0f;
 	this->strk_color_[2] = 0.0f;
 	this->strk_color_[3] = 1.0f;
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 }
 
 Shape::~Shape(void) {
@@ -45,12 +48,15 @@ Shape::~Shape(void) {
 }
 
 void Shape::Destroy(void) {
-	this->shp_sem_.Wait();
+	
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	
+//	this->shp_sem_.Wait();
 	dtk_destroy_shape(this->shp_ptr_);
 	this->shp_ptr_ = nullptr;
 	this->strk_ptr_ = nullptr;
 	this->fill_ptr_ = nullptr;
-	this->shp_sem_.Post();
+//	this->shp_sem_.Post();
 }
 
 void Shape::Create(void) {
@@ -61,7 +67,8 @@ void Shape::Create(void) {
 	this->CreateFill();
 	this->CreateStroke();
 
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	if(this->strk_ptr_ != nullptr && this->fill_ptr_ != nullptr) {
 		nshps = 2;
 		shps = new dtk_hshape[nshps*sizeof(dtk_hshape)];
@@ -80,80 +87,92 @@ void Shape::Create(void) {
 	if(nshps > 0) {
 		this->shp_ptr_ = dtk_create_composite_shape(this->shp_ptr_, nshps, shps, 1);
 	}
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 
 	delete shps;
 }
 
 void Shape::SetStroke(float thick, const float* color) {
-	this->shp_sem_.Wait();
+	
+	//std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	this->shp_mutex_.lock();
+//	this->shp_sem_.Wait();
 	this->strk_thick_ = thick;
 	this->strk_color_[0] = color[0];
 	this->strk_color_[1] = color[1];
 	this->strk_color_[2] = color[2];
 	this->strk_color_[3] = color[3];
-	this->shp_sem_.Post();
+//	this->shp_sem_.Post();
+	this->shp_mutex_.unlock();
 
 	this->Create();
 }
 
 float Shape::GetHeight(void) {
+	
 	float height;
-	this->shp_sem_.Wait();
+	
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+//	this->shp_sem_.Wait();
 	height = this->height_;
-	this->shp_sem_.Post();
+//	this->shp_sem_.Post();
 	return height;
 }
 
 float Shape::GetWidth(void) {
 	float width;
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	width = this->width_;
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 	return width;
 }
 
 void Shape::Move(float x, float y) {
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	if(this->shp_ptr_ != nullptr) {
 		dtk_move_shape(this->shp_ptr_, x, y);
 		this->curr_x_ = x;
 		this->curr_y_ = y;
 	}
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 }
 
 void Shape::RelMove(float dx, float dy) {
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	if(this->shp_ptr_ != nullptr) {
 		dtk_relmove_shape(this->shp_ptr_, dx, dy);
 		this->curr_x_ = this->curr_x_ + dx;
 		this->curr_y_ = this->curr_y_ + dy;
 	}
-	this->shp_sem_.Post();
+//	this->shp_sem_.Post();
 }
 
 void Shape::Rotate(float deg) {
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	if(this->shp_ptr_ != nullptr) {
 		dtk_rotate_shape(this->shp_ptr_, deg);
 		this->curr_z_ = deg;
 	}
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 }
 
 void Shape::RelRotate(float ddeg) {
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	if(this->shp_ptr_ != nullptr) {
 		dtk_relrotate_shape(this->shp_ptr_, ddeg);
 		this->curr_z_ = this->curr_z_ + ddeg;
 	}
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 }
 
 void Shape::SetAlpha(float alpha, unsigned int element) {
 
-	this->shp_sem_.Wait();
+	//this->shp_sem_.Wait();
 
 	switch(element) {
 		case Shape::Stroke:
@@ -170,12 +189,13 @@ void Shape::SetAlpha(float alpha, unsigned int element) {
 			break;
 	}
 
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 	
 	//this->Create();
 }
 
 void Shape::set_alpha_stroke(float alpha) {
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
 	if(this->strk_ptr_ != nullptr) {
 		this->strk_color_[3] = alpha;
 		dtk_setcolor_shape(this->strk_ptr_, this->strk_color_, DTK_IGNRGB);
@@ -183,6 +203,7 @@ void Shape::set_alpha_stroke(float alpha) {
 }
 
 void Shape::set_alpha_fill(float alpha) {
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
 	if(this->fill_ptr_ != nullptr) {
 		this->fill_color_[3] = alpha;
 		dtk_setcolor_shape(this->fill_ptr_, this->fill_color_, DTK_IGNRGB);
@@ -190,6 +211,7 @@ void Shape::set_alpha_fill(float alpha) {
 }
 
 void Shape::set_color_stroke(const float*& color) {
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
 	if(this->strk_ptr_ != nullptr) {
 		this->strk_color_[0] = color[0];
 		this->strk_color_[1] = color[1];
@@ -199,6 +221,7 @@ void Shape::set_color_stroke(const float*& color) {
 }
 
 void Shape::set_color_fill(const float*& color) {
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
 	if(this->fill_ptr_ != nullptr) {
 		this->fill_color_[0] = color[0];
 		this->fill_color_[1] = color[1];
@@ -209,7 +232,8 @@ void Shape::set_color_fill(const float*& color) {
 
 void Shape::SetColor(const float* color, unsigned int element) {
 
-	this->shp_sem_.Wait();
+	//std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	switch(element) {
 		case Shape::Stroke:
 			this->set_color_stroke(color);
@@ -224,7 +248,7 @@ void Shape::SetColor(const float* color, unsigned int element) {
 		default:
 			break;
 	}
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 
 	//this->Create();
 }
@@ -238,15 +262,17 @@ void Shape::Show(unsigned int element) {
 }
 
 void Shape::GetPosition(float* x, float* y) {
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	*x = this->curr_x_;
 	*y = this->curr_y_;
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 }
 
 float Shape::GetAlpha(unsigned int element) {
 	float alpha;
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 
 	switch(element) {
 		case Shape::Stroke:
@@ -262,12 +288,13 @@ float Shape::GetAlpha(unsigned int element) {
 			break;
 	}
 
-	this->shp_sem_.Post();
+//	this->shp_sem_.Post();
 	return alpha;
 }
 
 void Shape::GetColor(float* color, unsigned int element) {
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	
 	switch(element) {
 		case Shape::Stroke:
@@ -282,22 +309,23 @@ void Shape::GetColor(float* color, unsigned int element) {
 		default:
 			break;
 	}
-	this->shp_sem_.Post();
+//	this->shp_sem_.Post();
 }
 
-void Shape::WaitShape(void) {
-	this->shp_sem_.Wait();
-}
-
-void Shape::PostShape(void) {
-	this->shp_sem_.Post();
-}
+//void Shape::WaitShape(void) {
+//	this->shp_sem_.Wait();
+//}
+//
+//void Shape::PostShape(void) {
+//	this->shp_sem_.Post();
+//}
 
 void Shape::Draw(void) {
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	if(this->shp_ptr_ != nullptr)
 		dtk_draw_shape(this->shp_ptr_);
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 }
 
 	}

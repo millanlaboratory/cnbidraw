@@ -23,6 +23,7 @@ bool Gallery::SetFolder(const std::string& folder, const std::vector<std::string
 		return false;
 	}
 
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
 	this->WaitShape();
 	dirent* entry;
 	while((entry = readdir(dir)) != nullptr) {

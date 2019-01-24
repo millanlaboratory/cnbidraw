@@ -23,25 +23,28 @@ Circle::Circle(float radius, const float* color, unsigned int npoints) : Shape()
 Circle::~Circle(void){};
 
 void Circle::CreateFill(void) {
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	this->fill_ptr_ = dtk_create_circle(this->fill_ptr_, this->orig_x_,
 			   						   this->orig_y_, this->radius_, 
 									   1, this->fill_color_, 
 									   this->npoints_);
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 }
 
 void Circle::CreateStroke(void) {
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	this->strk_ptr_ = nullptr;
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 }
 
 unsigned int Circle::GetNumPoints(void) {
 	unsigned int npoints;
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	npoints = this->npoints_;
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 	return npoints;
 }
 

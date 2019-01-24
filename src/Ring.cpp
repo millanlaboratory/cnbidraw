@@ -25,26 +25,29 @@ Ring::Ring(float radius, float thick, const float* color, unsigned int npoints) 
 Ring::~Ring(void){};
 
 void Ring::CreateFill(void) {
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 
 	this->fill_ptr_ = dtk_create_circle_str(this->fill_ptr_, this->orig_x_,
 			   						       this->orig_y_, this->radius_, 
 										   this->thick_, this->fill_color_, 
 										   this->npoints_);
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 }
 
 void Ring::CreateStroke(void) {
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	this->strk_ptr_ = nullptr;
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 }
 
 float Ring::GetThick(void) {
 	float thick;
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	thick = this->thick_;
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 	return thick;
 }
 

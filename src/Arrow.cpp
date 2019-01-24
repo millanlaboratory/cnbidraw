@@ -70,34 +70,38 @@ Arrow::~Arrow(void) {
 }
 
 void Arrow::CreateFill(void) {
-    this->shp_sem_.Wait();	
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+    //this->shp_sem_.Wait();	
     this->fill_ptr_ = dtk_create_complex_shape(this->fill_ptr_,
 					      this->fill_nvert_, this->fill_vertpos_,
 					      this->fill_vertcol_, NULL, 
 					      this->fill_nind_, this->fill_indices_, 
 					      DTK_TRIANGLE_STRIP, NULL);
-    this->shp_sem_.Post();	
+    //this->shp_sem_.Post();	
 }
 
 void Arrow::CreateStroke(void) {
-	this->shp_sem_.Wait();
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//this->shp_sem_.Wait();
 	this->strk_ptr_ = nullptr;
-	this->shp_sem_.Post();
+	//this->shp_sem_.Post();
 }
 
 float Arrow::GetThick(void) {
     float thick;
-    this->shp_sem_.Wait();	
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+    //this->shp_sem_.Wait();	
     thick = this->thick_;
-    this->shp_sem_.Post();
+    //this->shp_sem_.Post();
     return thick;
 }
 
 float Arrow::GetSqueeze(void) {
     float squeeze;
-    this->shp_sem_.Wait();	
+	std::lock_guard<std::mutex> lock(this->shp_mutex_);
+    //this->shp_sem_.Wait();	
     squeeze = this->squeeze_;
-    this->shp_sem_.Post();
+    //this->shp_sem_.Post();
     return squeeze;
 }
     }

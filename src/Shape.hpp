@@ -4,7 +4,8 @@
 #include <string.h>
 #include <drawtk.h>
 #include <dtk_colors.h>
-#include <cnbicore/CcSemaphore.hpp>
+#include <mutex>
+//#include <cnbicore/CcSemaphore.hpp>
 #include <cnbicore/CcTime.hpp>
 
 #include "Flags.hpp"
@@ -146,12 +147,12 @@ class Shape {
 		/*! \brief Shape's lock
 		 * It locks the local resources
 		 */
-		void WaitShape(void);
+		//void WaitShape(void);
 		
 		/*! \brief Shape's unlock
 		 * It unlocks the local resources
 		 */
-		void PostShape(void);
+		//void PostShape(void);
 
 		void SetStroke(float thick, const float* color);
 
@@ -173,7 +174,8 @@ class Shape {
 		dtk_hshape 	fill_ptr_;
 
 	protected:
-		CcSemaphore shp_sem_;
+		//CcSemaphore shp_sem_;
+		std::mutex	shp_mutex_;
 		float		curr_x_;
 		float 		curr_y_;
 		float 		curr_z_;

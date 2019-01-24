@@ -2,10 +2,9 @@
 #define CNBIDRAW_ENGINE_HPP
 
 #include <drawtk.h>
-//#include <cnbicore/CcSemaphore.hpp>
 #include <mutex>
 #include <cnbicore/CcThread.hpp>
-
+#include <cnbicore/CcTime.hpp>
 #include "Flags.hpp"
 #include "Window.hpp"
 #include "Shape.hpp"
@@ -160,8 +159,6 @@ class Engine : public CcThread, public Window {
 		void Render(void);
 
     private:
-		//CcSemaphore shps_sem_;
-		//CcSemaphore eng_sem_;
 		std::mutex  shps_mutex_;
 		std::mutex  eng_mutex_;
 		ShapeMap    shps_;

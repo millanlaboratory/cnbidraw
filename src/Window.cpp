@@ -34,134 +34,94 @@ Window::~Window(void) {
 
 void Window::SetCaption(const std::string& caption) {
 	std::lock_guard<std::mutex> lock(this->win_mutex_);
-	//this->win_sem_.Wait();
 	this->win_caption_ = caption;
-	//this->win_sem_.Post();
 }
 
 void Window::SetGeometry(unsigned int width, unsigned int height) {
 	std::lock_guard<std::mutex> lock(this->win_mutex_);
-	//this->win_sem_.Wait();
 	this->win_width_  = width;
 	this->win_height_ = height;
-	//this->win_sem_.Post();
 }
 
 void Window::SetPosition(unsigned int x, unsigned int y) {
 	std::lock_guard<std::mutex> lock(this->win_mutex_);
-	//this->win_sem_.Wait();
 	this->win_x_ = x;
 	this->win_y_ = y;
-	//this->win_sem_.Post();
 }
 
 void Window::SetBpp(unsigned int bpp) {
 	std::lock_guard<std::mutex> lock(this->win_mutex_);
-	//this->win_sem_.Wait();
 	this->win_bpp_ = bpp;
-	//this->win_sem_.Post();
 }
 
 void Window::GetCaption(std::string* caption) {
 	std::lock_guard<std::mutex> lock(this->win_mutex_);
-	//this->win_sem_.Wait();
 	caption = &(this->win_caption_);
-	//this->win_sem_.Post();
 }
 
 void Window::GetGeometry(unsigned int* width, unsigned int* height) {
 	std::lock_guard<std::mutex> lock(this->win_mutex_);
-	//this->win_sem_.Wait();
 	width  = &(this->win_width_);
 	height = &(this->win_height_);
-	//this->win_sem_.Post();
 }
 
 void Window::GetPosition(unsigned int* x, unsigned int* y) {
 	std::lock_guard<std::mutex> lock(this->win_mutex_);
-	//this->win_sem_.Wait();
 	x = &(this->win_x_);
 	y = &(this->win_y_);
-	//this->win_sem_.Post();
 }
 
 void Window::GetBpp(unsigned int* bpp) {
 	std::lock_guard<std::mutex> lock(this->win_mutex_);
-	//this->win_sem_.Wait();
 	bpp = &(this->win_bpp_);
-	//this->win_sem_.Post();
 }
 
 
 void Window::OpenWindow(void) {
 	std::lock_guard<std::mutex> lock(this->win_mutex_);
-	//this->win_sem_.Wait();
 	this->win_ptr_ = dtk_create_window(this->win_width_, this->win_height_, this->win_x_, 
 						this->win_y_, this->win_bpp_, this->win_caption_.c_str());
 	dtk_make_current_window(this->win_ptr_);
-	//this->win_sem_.Post();
 }
 
 void Window::CloseWindow(void) {
 	std::lock_guard<std::mutex> lock(this->win_mutex_);
-	//this->win_sem_.Wait();
 	dtk_close(this->win_ptr_);
 	this->win_ptr_ = nullptr;
-	//this->win_sem_.Post();
 }
 
 void Window::MakeCurrentWindow(void) {
 	std::lock_guard<std::mutex> lock(this->win_mutex_);
-	//this->win_sem_.Wait();
 	dtk_make_current_window(this->win_ptr_);
-	//this->win_sem_.Post();
 }
 
 void Window::ClearWindow(void) {
 	std::lock_guard<std::mutex> lock(this->win_mutex_);
-	//this->win_sem_.Wait();
 	dtk_clear_screen(this->win_ptr_);
-	//this->win_sem_.Post();
 }
 
 void Window::UpdateWindow(void) {
 	std::lock_guard<std::mutex> lock(this->win_mutex_);
-	//this->win_sem_.Wait();
 	dtk_update_screen(this->win_ptr_);
-	//this->win_sem_.Post();
 }
 
 bool Window::IsValidWindow(void) {
 	bool retcod = true;
 	std::lock_guard<std::mutex> lock(this->win_mutex_);
-	//this->win_sem_.Wait();
 	if(this->win_ptr_ == nullptr)
 		retcod = false;
-	//this->win_sem_.Post();
 	return retcod;
 }
 
 void Window::SetEventHandler(DTKEvtProc handler) {
 	std::lock_guard<std::mutex> lock(this->win_mutex_);
-	//this->win_sem_.Wait();
 	dtk_set_event_handler(this->win_ptr_, handler);
-	//this->win_sem_.Post();
 }
 
 void Window::ProcessEvents(void) {
 	std::lock_guard<std::mutex> lock(this->win_mutex_);
-	//this->win_sem_.Wait();
 	dtk_process_events(this->win_ptr_);
-	//this->win_sem_.Post();
 }
-
-//void Window::WaitWindow(void) {
-//	this->win_sem_.Wait();
-//}
-//
-//void Window::PostWindow(void) {
-//	this->win_sem_.Post();
-//}
 
 	}
 }

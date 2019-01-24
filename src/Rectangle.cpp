@@ -24,17 +24,14 @@ Rectangle::~Rectangle(void) {}
 
 void Rectangle::CreateFill(void) {
 	std::lock_guard<std::mutex> lock(this->shp_mutex_);
-	//this->shp_sem_.Wait();	
 	this->fill_ptr_ = dtk_create_rectangle_hw(this->fill_ptr_, this->orig_x_, this->orig_y_, 
 			   								 this->height_, this->width_, 1,
 											 this->fill_color_);
-	//this->shp_sem_.Post();	
 }
 
 void Rectangle::CreateStroke(void) {
 
 	std::lock_guard<std::mutex> lock(this->shp_mutex_);
-	//this->shp_sem_.Wait();
 	
     // Initialize vertex, colors and index arrays
 	this->strk_nvert_    = 8;
@@ -87,7 +84,6 @@ void Rectangle::CreateStroke(void) {
 					      this->strk_vertcol_, NULL, 
 					      this->strk_nind_, this->strk_indices_, 
 					      DTK_TRIANGLE_STRIP, NULL);
-	//this->shp_sem_.Post();
 }
 
 	}

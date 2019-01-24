@@ -62,9 +62,7 @@ bool String::SetFont(Font* font) {
 void String::SetText(const std::string& text) {
 	
 	this->shp_mutex_.lock();
-	//this->shp_sem_.Wait();
 	this->text_ = text;
-	//this->shp_sem_.Post();
 	this->shp_mutex_.unlock();
 	
 	// Create shape
@@ -72,11 +70,8 @@ void String::SetText(const std::string& text) {
 }
 
 void String::SetAlign(unsigned int align) {
-	//std::lock_guard<std::mutex> lock(this->shp_mutex_);
 	this->shp_mutex_.lock();
-	//this->shp_sem_.Wait();
 	this->align_ = align;
-	//this->shp_sem_.Post();
 	this->shp_mutex_.unlock();
 
 	// Create shape
@@ -84,11 +79,8 @@ void String::SetAlign(unsigned int align) {
 }
 
 void String::SetSize(float size) {
-	//std::lock_guard<std::mutex> lock(this->shp_mutex_);
-	//this->shp_sem_.Wait();
 	this->shp_mutex_.lock();
 	this->size_ = size;
-	//this->shp_sem_.Post();
 	this->shp_mutex_.unlock();
 	
 	// Create shape
@@ -98,7 +90,6 @@ void String::SetSize(float size) {
 void String::CreateFill(void) {
 
 	std::lock_guard<std::mutex> lock(this->shp_mutex_);
-	//this->shp_sem_.Wait();
 	if(this->font_ != nullptr) {
 		this->fill_ptr_ = dtk_create_string(this->fill_ptr_, 
 										   this->text_.c_str(), this->size_,
@@ -106,15 +97,12 @@ void String::CreateFill(void) {
 										   this->align_, this->fill_color_, 
 										   this->font_->font_);
 	}
-	//this->shp_sem_.Post();
 
 }
 
 void String::CreateStroke(void) {
 	std::lock_guard<std::mutex> lock(this->shp_mutex_);
-	//this->shp_sem_.Wait();
 	this->strk_ptr_ = nullptr;
-	//this->shp_sem_.Post();
 }
 
 	}

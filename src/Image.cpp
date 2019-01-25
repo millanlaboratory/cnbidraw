@@ -24,9 +24,10 @@ Image::Image(float width, float height, const float* color) : Shape() {
 }
 
 Image::~Image(void) {
-	std::lock_guard<std::mutex> lock(this->shp_mutex_);
-	if(this->tex_ptr_ != nullptr)
-		dtk_destroy_texture(this->tex_ptr_);
+	// No needed
+	//std::lock_guard<std::mutex> lock(this->shp_mutex_);
+	//if(this->tex_ptr_ != nullptr)
+	//	dtk_destroy_texture(this->tex_ptr_);
 }
 
 bool Image::Set(const std::string& filename, unsigned int mxlvl) {
